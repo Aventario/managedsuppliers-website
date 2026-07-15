@@ -1,0 +1,476 @@
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@source "./";
+
+/* Tailwind theme: color tokens (so bg-primary/text-foreground resolve to our vars) +
+   breakpoints. @theme inline keeps the var() reference (theme-swappable at runtime). */
+@theme inline {
+  --breakpoint-vp375: 375px;
+  --breakpoint-vp768: 768px;
+  --breakpoint-vp1280: 1280px;
+  --breakpoint-vp1920: 1920px;
+  --breakpoint-md: 572px;
+  --breakpoint-lg: 1025px;
+  --breakpoint-2xl: 1601px;
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-border: var(--border);
+  --color-clr-0: var(--clr-0);
+  --color-primary: var(--primary);
+  --color-muted: var(--muted);
+  --color-color-001: var(--color-001);
+  --color-clr-1: var(--clr-1);
+  --color-clr-2: var(--clr-2);
+  --color-accent: var(--accent);
+  --color-clr-3: var(--clr-3);
+  --color-color-002: var(--color-002);
+  --color-clr-4: var(--clr-4);
+  --color-clr-5: var(--clr-5);
+  --color-clr-6: var(--clr-6);
+  --color-clr-7: var(--clr-7);
+  --color-clr-8: var(--clr-8);
+  --color-clr-9: var(--clr-9);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-clr-10: var(--clr-10);
+  --color-clr-11: var(--clr-11);
+  --color-clr-12: var(--clr-12);
+  --color-clr-13: var(--clr-13);
+  --color-clr-14: var(--clr-14);
+  --color-clr-15: var(--clr-15);
+  --color-clr-16: var(--clr-16);
+  --color-clr-17: var(--clr-17);
+  --color-clr-18: var(--clr-18);
+  --color-clr-19: var(--clr-19);
+  --color-clr-20: var(--clr-20);
+  --color-clr-21: var(--clr-21);
+  --color-clr-22: var(--clr-22);
+  --color-clr-23: var(--clr-23);
+  --color-clr-24: var(--clr-24);
+  --color-clr-25: var(--clr-25);
+  --color-clr-26: var(--clr-26);
+  --color-clr-27: var(--clr-27);
+  --color-clr-28: var(--clr-28);
+  --color-clr-29: var(--clr-29);
+}
+
+/* Design tokens (values). */
+:root {
+  --background: rgb(255, 255, 255);
+  --foreground: rgb(102, 102, 102);
+  --primary: rgb(46, 163, 242);
+  --accent: rgb(39, 156, 133);
+  --border: rgb(51, 51, 51);
+  --muted-foreground: rgb(111, 124, 141);
+  --muted: rgb(118, 118, 118);
+  --color-001: rgb(0, 0, 0);
+  --color-002: rgb(55, 125, 111);
+}
+
+:root {
+  /* fonts */
+  --font-body: "Open Sans", Arial, sans-serif;
+  --font-001: Roboto, Helvetica, Arial, Lucida, sans-serif;
+  --font-002: Lato, Helvetica, Arial, Lucida, sans-serif;
+  --font-003: sans-serif;
+  /* fontSizes */
+  --font-size-001: 12px;
+  --font-size-002: 13.3333px;
+  --font-size-003: 14px;
+  --font-size-004: 15px;
+  --font-size-005: 16px;
+  --font-size-006: 20px;
+  --font-size-007: 24px;
+  --font-size-008: 25px;
+  --font-size-009: 26px;
+  --font-size-010: 33px;
+  --font-size-011: 40px;
+  --font-size-012: 48px;
+  --font-size-013: 60px;
+  /* fontWeights */
+  --font-weight-001: 400;
+  --font-weight-002: 500;
+  --font-weight-003: 700;
+  --font-weight-004: 900;
+  /* lineHeights */
+  --line-height-001: 23.8px;
+  --line-height-002: 0px;
+  --line-height-003: 25.6px;
+  --line-height-004: 23px;
+  --line-height-005: 22.4px;
+  --line-height-006: 15.6px;
+  --line-height-007: 14px;
+  --line-height-008: 48px;
+  --line-height-009: 26px;
+  --line-height-010: 19.2px;
+  --line-height-011: 37.95px;
+  --line-height-012: 18px;
+  --line-height-013: 27.2px;
+  --line-height-014: 46px;
+  --line-height-015: 69px;
+  /* spacing */
+  --space-001: -20px;
+  --space-002: 1px;
+  --space-003: 2px;
+  --space-004: 3px;
+  --space-005: 5px;
+  --space-006: 6px;
+  --space-007: 7px;
+  --space-008: 8px;
+  --space-009: 9px;
+  --space-010: 10px;
+  --space-011: 12px;
+  --space-012: 19px;
+  --space-013: 22px;
+  --space-014: 25.5938px;
+  --space-015: 28.1562px;
+  --space-016: 29px;
+  --space-017: 30px;
+  --space-018: 38px;
+  --space-019: 40px;
+  --space-020: 46px;
+  --space-021: 51.1875px;
+  --space-022: 104px;
+  /* radii */
+  --radius-001: 3px;
+  --radius-002: 6px;
+  --radius-003: 8px;
+  --radius-004: 16px;
+  --radius-005: 50%;
+  /* zIndices */
+  --z-001: 2;
+  /* breakpoints */
+  --bp-375: 375px;
+  --bp-768: 768px;
+  --bp-1280: 1280px;
+  --bp-1920: 1920px;
+}
+
+:root {
+  --clr-0: rgba(0, 0, 0, 0.1);
+  --clr-1: rgba(255, 255, 255, 0);
+  --clr-2: rgb(235, 199, 71);
+  --clr-3: rgb(243, 243, 244);
+  --clr-4: rgb(228, 246, 243);
+  --clr-5: rgba(255, 255, 255, 0.75);
+  --clr-6: rgba(255, 255, 255, 0.6);
+  --clr-7: rgba(41, 196, 169, 0.6);
+  --clr-8: rgb(153, 222, 209);
+  --clr-9: rgb(121, 212, 194);
+  --clr-10: rgb(55, 74, 94);
+  --clr-11: rgb(6, 38, 102);
+  --clr-12: rgb(52, 54, 53);
+  --clr-13: rgba(39, 156, 133, 0.004);
+  --clr-14: rgba(255, 255, 255, 0.106);
+  --clr-15: rgba(0, 0, 0, 0.043);
+  --clr-16: rgba(39, 156, 133, 0.15);
+  --clr-17: rgba(39, 156, 133, 0.106);
+  --clr-18: rgba(255, 255, 255, 0.075);
+  --clr-19: rgba(255, 255, 255, 0.15);
+  --clr-20: rgba(0, 0, 0, 0.2);
+  --clr-21: rgba(6, 38, 102, 0.15);
+  --clr-22: rgb(130, 192, 199);
+  --clr-23: rgba(255, 255, 255, 0.894);
+  --clr-24: rgba(0, 0, 0, 0.004);
+  --clr-25: rgba(39, 156, 133, 0.894);
+  --clr-26: rgba(39, 156, 133, 0.93);
+  --clr-27: rgb(17, 153, 255);
+  --clr-28: rgba(255, 255, 255, 0.882);
+  --clr-29: rgba(6, 38, 102, 0.855);
+}
+
+@layer base {
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid currentColor; }
+html { -webkit-text-size-adjust: 100%; line-height: normal; }
+body { margin: 0; }
+ul, ol, menu { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea, optgroup { font: inherit; color: inherit; background: transparent; border: 0; padding: 0; margin: 0; text-align: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+table { border-collapse: separate; border-spacing: 0; }
+img, picture, video, canvas, svg { display: inline-block; }
+/* Lottie runtime fit: the player re-mounts its svg/canvas into an absolute overlay that fills
+   the host's captured (per-viewport, definite) box. Force that runtime media to fit the box so
+   an aspect-mismatched viewBox (e.g. a portrait animation in a shorter, letterboxed source box)
+   can't inflate past the pinned height. Scoped to the runtime-marked host only. */
+[data-ditto-lottie] > div > svg, [data-ditto-lottie] > div > canvas { width: 100%; height: 100%; display: block; }
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+/* Neutralize UA text defaults to inherit so the generator's default-skipping is
+   correct: a property equal to its inherited value is simply not emitted. */
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+b, strong, th { font-weight: inherit; }
+em, i, cite, var, dfn, address, q { font-style: inherit; }
+small, big, sub, sup { font-size: inherit; }
+sub, sup { vertical-align: inherit; }
+code, kbd, samp, pre, tt, var { font-family: inherit; font-size: inherit; }
+mark { background-color: transparent; color: inherit; }
+abbr[title] { text-decoration: none; }
+fieldset, legend { min-width: 0; }
+
+/* fonts */
+@font-face {
+  font-family: "ETmodules";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("/assets/cloned/fonts/94299e6fa605.woff") format("woff"), url("/assets/cloned/fonts/5015fa2ba3d8.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/6a1d9875e56e.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/3b2c3b6434e3.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/1f59327916f6.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/66cde18af878.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/6b668a911756.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/07327a9aa907.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/c8b43acb3845.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/54326e9b89b8.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/e21d99765c53.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/643350e58604.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/df47118b775f.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/5030aa2cc996.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/1d88df36c00d.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/f30bf7257796.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/fe14a6ff074a.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/2f38f6f8769d.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/3ab67c4d88a9.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/d3389759cd89.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/2314a7bac702.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/b92d40d32636.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/91d94c72dde9.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/3161499c0854.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/080030c6d9cc.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/bc5f583bba4b.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/5247a130722b.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/06c8a4d85699.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/f701c210d674.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/a104495db274.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/e57187765578.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/421e26ad120b.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/a7eadee05a12.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/assets/cloned/fonts/6167190c8cb5.ttf") format("truetype");
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+html, body { overflow-x: clip; }
+}

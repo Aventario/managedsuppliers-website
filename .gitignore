@@ -1,0 +1,7 @@
+node_modules/
+.next/
+out/
+.vercel/
+*.log
+public/assets/figma/export-2026-07-13/
+public/assets/cloned/videos/

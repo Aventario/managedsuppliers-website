@@ -1,0 +1,2776 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=1" />
+<title>A better way to manage suppliers - managedsuppliers</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid currentColor; }
+html { -webkit-text-size-adjust: 100%; line-height: normal; }
+body { margin: 0; }
+ul, ol, menu { list-style: none; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea, optgroup { font: inherit; color: inherit; background: transparent; border: 0; padding: 0; margin: 0; text-align: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+table { border-collapse: separate; border-spacing: 0; }
+img, picture, video, canvas, svg { display: inline-block; }
+/* Lottie runtime fit: the player re-mounts its svg/canvas into an absolute overlay that fills
+   the host's captured (per-viewport, definite) box. Force that runtime media to fit the box so
+   an aspect-mismatched viewBox (e.g. a portrait animation in a shorter, letterboxed source box)
+   can't inflate past the pinned height. Scoped to the runtime-marked host only. */
+[data-ditto-lottie] > div > svg, [data-ditto-lottie] > div > canvas { width: 100%; height: 100%; display: block; }
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+/* Neutralize UA text defaults to inherit so the generator's default-skipping is
+   correct: a property equal to its inherited value is simply not emitted. */
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+b, strong, th { font-weight: inherit; }
+em, i, cite, var, dfn, address, q { font-style: inherit; }
+small, big, sub, sup { font-size: inherit; }
+sub, sup { vertical-align: inherit; }
+code, kbd, samp, pre, tt, var { font-family: inherit; font-size: inherit; }
+mark { background-color: transparent; color: inherit; }
+abbr[title] { text-decoration: none; }
+fieldset, legend { min-width: 0; }
+
+/* fonts */
+@font-face {
+  font-family: "ETmodules";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("public/assets/cloned/fonts/94299e6fa605.woff") format("woff"), url("public/assets/cloned/fonts/5015fa2ba3d8.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/6a1d9875e56e.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/3b2c3b6434e3.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/1f59327916f6.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/66cde18af878.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/6b668a911756.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/07327a9aa907.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/c8b43acb3845.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/54326e9b89b8.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/e21d99765c53.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/643350e58604.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/df47118b775f.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/5030aa2cc996.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/1d88df36c00d.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/f30bf7257796.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/fe14a6ff074a.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/2f38f6f8769d.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/3ab67c4d88a9.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/d3389759cd89.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/2314a7bac702.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/b92d40d32636.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 100;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/91d94c72dde9.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/3161499c0854.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/080030c6d9cc.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/bc5f583bba4b.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/5247a130722b.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/06c8a4d85699.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/f701c210d674.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/a104495db274.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/e57187765578.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/421e26ad120b.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/a7eadee05a12.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("public/assets/cloned/fonts/6167190c8cb5.ttf") format("truetype");
+}
+
+/* tokens */
+:root {
+  --background: rgb(255, 255, 255);
+  --foreground: rgb(102, 102, 102);
+  --primary: rgb(46, 163, 242);
+  --accent: rgb(39, 156, 133);
+  --border: rgb(51, 51, 51);
+  --muted-foreground: rgb(111, 124, 141);
+  --muted: rgb(118, 118, 118);
+  --color-001: rgb(0, 0, 0);
+  --color-002: rgb(55, 125, 111);
+}
+
+:root {
+  /* fonts */
+  --font-body: "Open Sans", Arial, sans-serif;
+  --font-001: Roboto, Helvetica, Arial, Lucida, sans-serif;
+  --font-002: Lato, Helvetica, Arial, Lucida, sans-serif;
+  --font-003: sans-serif;
+  /* fontSizes */
+  --font-size-001: 12px;
+  --font-size-002: 13.3333px;
+  --font-size-003: 14px;
+  --font-size-004: 15px;
+  --font-size-005: 16px;
+  --font-size-006: 20px;
+  --font-size-007: 24px;
+  --font-size-008: 25px;
+  --font-size-009: 26px;
+  --font-size-010: 33px;
+  --font-size-011: 40px;
+  --font-size-012: 48px;
+  --font-size-013: 60px;
+  /* fontWeights */
+  --font-weight-001: 400;
+  --font-weight-002: 500;
+  --font-weight-003: 700;
+  --font-weight-004: 900;
+  /* lineHeights */
+  --line-height-001: 23.8px;
+  --line-height-002: 0px;
+  --line-height-003: 25.6px;
+  --line-height-004: 23px;
+  --line-height-005: 22.4px;
+  --line-height-006: 15.6px;
+  --line-height-007: 14px;
+  --line-height-008: 48px;
+  --line-height-009: 26px;
+  --line-height-010: 19.2px;
+  --line-height-011: 37.95px;
+  --line-height-012: 18px;
+  --line-height-013: 27.2px;
+  --line-height-014: 46px;
+  --line-height-015: 69px;
+  /* spacing */
+  --space-001: -20px;
+  --space-002: 1px;
+  --space-003: 2px;
+  --space-004: 3px;
+  --space-005: 5px;
+  --space-006: 6px;
+  --space-007: 7px;
+  --space-008: 8px;
+  --space-009: 9px;
+  --space-010: 10px;
+  --space-011: 12px;
+  --space-012: 19px;
+  --space-013: 22px;
+  --space-014: 25.5938px;
+  --space-015: 28.1562px;
+  --space-016: 29px;
+  --space-017: 30px;
+  --space-018: 38px;
+  --space-019: 40px;
+  --space-020: 46px;
+  --space-021: 51.1875px;
+  --space-022: 104px;
+  /* radii */
+  --radius-001: 3px;
+  --radius-002: 6px;
+  --radius-003: 8px;
+  --radius-004: 16px;
+  --radius-005: 50%;
+  /* zIndices */
+  --z-001: 2;
+  /* breakpoints */
+  --bp-375: 375px;
+  --bp-768: 768px;
+  --bp-1280: 1280px;
+  --bp-1920: 1920px;
+}
+
+
+/* page base */
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+html, body { overflow-x: clip; }
+
+/* nodes */
+.cn0{display:block;color:var(--foreground);font-family:var(--font-body);font-size:var(--font-size-003);font-weight:var(--font-weight-002);font-style:normal;line-height:var(--line-height-001);letter-spacing:normal;word-spacing:0px;text-align:start;text-transform:none;white-space:normal;word-break:normal;overflow-wrap:normal;text-indent:0px;text-shadow:none;font-variant-caps:normal;font-feature-settings:normal;list-style-position:outside;writing-mode:horizontal-tb;direction:ltr;background-color:var(--background);background-size:cover;background-position:50% 0%;background-repeat:no-repeat;background-attachment:fixed}
+.cn1{display:block}
+.cn2{display:block;font-family:var(--font-003);line-height:var(--line-height-007);text-align:left}
+.cn3{width:41px;height:41px;display:block;position:fixed;bottom:20px;left:20px;z-index:600000;font-family:var(--font-003);line-height:var(--line-height-007);text-align:left}
+.cn4{box-sizing:content-box;width:41px;height:41px;display:block;border-top-left-radius:21px;border-top-right-radius:21px;border-bottom-right-radius:21px;border-bottom-left-radius:21px;overflow-x:hidden;overflow-y:hidden;color:var(--border);font-size:13.5px;font-weight:var(--font-weight-003);line-height:41px;text-transform:uppercase;white-space:nowrap;text-wrap:nowrap;cursor:pointer}
+.cn5{box-sizing:content-box;width:auto;height:23px;border-width:2px;border-style:solid;border-color:var(--border);display:block;float:left;margin-right:var(--space-011);padding-top:var(--space-007);padding-right:var(--space-007);padding-bottom:var(--space-007);padding-left:var(--space-007);border-top-left-radius:100%;border-top-right-radius:100%;border-bottom-right-radius:100%;border-bottom-left-radius:100%;overflow-x:hidden;overflow-y:hidden;background-color:var(--background)}
+.cn6{box-sizing:content-box;display:inline;opacity:0}
+.cn7{display:block;margin-top:-1px;padding-top:175px}
+.cn8{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;z-index:99999;line-height:var(--line-height-004);background-color:var(--background);box-shadow:rgba(0, 0, 0, 0.1) 0px 1px 0px 0px}
+.cn9{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px}
+.cn9::after{content:" ";display:block;width:100%;height:0px;color:rgb(102, 102, 102);font-size:0px;font-weight:var(--font-weight-002);line-height:var(--line-height-004)}
+.cn10{display:block}
+.cn11{display:inline}
+.cn12{display:inline;color:var(--primary);cursor:pointer}
+.cn13{width:93px;height:43px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 93 / 43}
+.cn14{display:block;padding-left:123px}
+.cn15{display:block}
+.cn16{display:block;list-style-type:none;list-style-position:outside}
+.cn17{display:list-item;position:relative;top:0px;right:0px;bottom:0px;left:0px;line-height:var(--line-height-007)}
+.cn18{display:inline;color:var(--primary);cursor:pointer}
+.cn19{display:list-item;position:relative;top:0px;right:0px;bottom:0px;left:0px;line-height:var(--line-height-007)}
+.cn20{display:inline;color:var(--primary);cursor:pointer}
+.cn21{display:list-item;position:relative;top:0px;right:0px;bottom:0px;left:0px;line-height:var(--line-height-007)}
+.cn22{display:inline;color:var(--primary);cursor:pointer}
+.cn23{display:list-item;position:relative;top:0px;right:0px;bottom:0px;left:0px;line-height:var(--line-height-007)}
+.cn24{display:inline;color:var(--primary);cursor:pointer}
+.cn25{display:list-item;position:relative;top:0px;right:0px;bottom:0px;left:0px;line-height:var(--line-height-007)}
+.cn26{display:inline;color:var(--primary);cursor:pointer}
+.cn27{display:block}
+.cn28{display:block}
+.cn29{display:block}
+.cn30{display:none}
+.cn31{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;line-height:var(--line-height-002)}
+.cn31::before{content:"a";position:relative;top:0px;right:0px;bottom:0px;left:0px;color:rgb(102, 102, 102);font-size:32px;line-height:32px}
+.cn32{display:block}
+.cn33{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px}
+.cn34{display:block}
+.cn35{width:164px;height:24px;border-width:2px;border-style:inset;border-color:var(--muted);display:inline-block;padding-top:var(--space-002);padding-right:var(--space-003);padding-bottom:var(--space-002);padding-left:var(--space-003);overflow-x:clip;overflow-y:clip;color:var(--color-001);font-size:var(--font-size-002);font-weight:var(--font-weight-001);line-height:var(--line-height-012);background-color:var(--background);cursor:text}
+.cn35::placeholder{color:rgb(117, 117, 117)}
+.cn36{display:block}
+.cn37{display:block}
+.cn38{display:block}
+.cn39{display:block}
+.cn40{display:block}
+.cn41{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;z-index:1}
+.cn42{height:800px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-021);padding-bottom:var(--space-021);background-color:rgba(255, 255, 255, 0);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn42::after{content:url("https://www.zazitatry.sk/test/hero_bg.svg");display:none;position:absolute;top:50%;right:0px;z-index:-99;color:rgb(102, 102, 102);font-size:var(--font-size-003);font-weight:var(--font-weight-002);line-height:var(--line-height-001);background-repeat:no-repeat}
+.cn43{width:1024px;height:480px;min-height:480px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-top:110px;margin-right:128px;margin-left:128px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn43::after{content:"";display:block;width:0px;height:0px}
+.cn44{width:483.828px;height:423.188px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:56.3125px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn45{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:82px;margin-bottom:var(--space-002);padding-top:11px;text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn46{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn47{height:148px;display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-013);font-weight:var(--font-weight-003);line-height:var(--line-height-015)}
+.cn48{display:inline;position:relative;top:0px;right:0px;bottom:0px;left:0px;box-shadow:rgb(235, 199, 71) 0px -6px 0px 0px inset}
+.cn49{display:inline}
+.cn50{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:32px;font-family:var(--font-001);font-size:var(--font-size-006);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn51{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn52{display:block}
+.cn53{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn54{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn55{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn56{display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-010);padding-right:var(--space-020);padding-bottom:var(--space-010);padding-left:20px;border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);color:var(--background);font-family:var(--font-001);font-size:var(--font-size-006);line-height:34px;background-color:var(--accent);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn56::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(255, 255, 255);font-size:32px;line-height:32px;opacity:0}
+.cn56::after{content:"I";display:block;position:absolute;top:10px;right:20px;bottom:10px;left:240.516px;width:20px;margin-left:var(--space-006);color:rgb(255, 255, 255);font-size:var(--font-size-006);line-height:34px}
+.cn57{display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-left:20px;padding-top:var(--space-006);padding-right:var(--space-019);padding-bottom:var(--space-006);padding-left:14px;border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);color:var(--accent);font-family:var(--font-001);font-size:var(--font-size-006);line-height:34px;text-decoration-line:underline;background-color:rgba(255, 255, 255, 0);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn57::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(39, 156, 133);font-size:32px;line-height:32px;opacity:0}
+.cn57::after{content:"$";display:block;position:absolute;top:6px;right:14px;bottom:6px;left:121.625px;width:20px;margin-left:var(--space-006);color:rgb(39, 156, 133);font-size:var(--font-size-006);line-height:34px}
+.cn58{width:483.828px;height:480px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn59{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn60{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn61{width:295px;height:480px;min-height:480px;display:inline;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%;overflow-x:clip;overflow-y:clip}
+.cn62{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:var(--space-021);background-color:rgba(255, 255, 255, 0);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn63{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn63::after{content:"";display:block;width:0px;height:0px}
+.cn64{width:100%;height:58px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn65{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn66{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn67{height:100%;display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-012);font-weight:var(--font-weight-004);line-height:var(--line-height-008);text-align:center}
+.cn68{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-bottom:var(--space-005);margin-left:128px;padding-top:76px;padding-bottom:var(--space-008);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn68::after{content:"";display:block;width:0px;height:0px}
+.cn69{width:303.781px;height:207.641px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:56.3125px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn70{width:32px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-right:271.781px;margin-bottom:var(--space-009);line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn71{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn72{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-005);padding-bottom:var(--space-008);color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-005);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn73{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn74{display:block}
+.cn75{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-001);line-height:var(--line-height-005);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn76{height:156.844px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn77{display:inline}
+.cn78{display:inline}
+.cn79{width:303.781px;height:230.047px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:56.3125px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn80{width:32px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-right:271.781px;margin-bottom:var(--space-009);line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn81{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn82{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-005);padding-bottom:var(--space-008);color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-005);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn83{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn84{display:block}
+.cn85{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-001);line-height:var(--line-height-005);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn86{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn87{display:block}
+.cn88{width:303.781px;height:207.641px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn89{width:32px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-right:271.781px;margin-bottom:var(--space-009);line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn90{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn91{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-005);padding-bottom:var(--space-008);color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-005);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn92{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn93{display:block}
+.cn94{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-001);line-height:var(--line-height-005);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn95{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn96{display:block}
+.cn97{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-021);padding-bottom:var(--space-021);background-color:var(--background);background-size:cover;background-position:50% 50%}
+.cn98{width:1024px;height:348.906px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:64px;padding-bottom:var(--space-018);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-color:rgb(243, 243, 244);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn98::after{content:"";display:block;width:0px;height:0px}
+.cn99{height:246.906px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn100{height:36px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-016);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;text-align:center;overflow-wrap:break-word;background-color:rgb(243, 243, 244);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn101{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn102{height:100%;display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-009);font-weight:var(--font-weight-004);line-height:var(--line-height-009)}
+.cn103{display:inline;color:var(--color-001);font-weight:var(--font-weight-001);text-align:start}
+.cn104{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:70%;margin-right:153.609px;margin-bottom:var(--space-015);margin-left:153.594px;line-height:var(--line-height-002);text-align:center;background-color:rgba(255, 255, 255, 0);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn105{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn106{width:235px;height:16px;display:inline;position:relative;top:0px;right:0px;bottom:0px;left:0px;visibility:hidden;max-width:100%;overflow-x:clip;overflow-y:clip}
+.cn107{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:66%;margin-right:174.094px;margin-bottom:var(--space-015);margin-left:174.078px;font-family:var(--font-001);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn108{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn109{height:71.3906px;display:block}
+.cn110{display:inline;text-decoration-line:underline}
+.cn111{display:inline;font-weight:var(--font-weight-003)}
+.cn112{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:-5px;text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn113{display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-019);padding-bottom:var(--space-008);padding-left:var(--space-013);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);color:var(--background);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-013);background-color:var(--accent);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn113::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(255, 255, 255);font-size:32px;line-height:32px;text-align:center;opacity:0}
+.cn113::after{content:"$";display:block;position:absolute;top:8px;right:19.2031px;bottom:8px;left:118.781px;width:16px;height:27.2031px;margin-left:4.8px;color:rgb(255, 255, 255);font-size:var(--font-size-005);line-height:var(--line-height-013);text-align:center}
+.cn114{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-021);padding-bottom:var(--space-008);background-color:var(--background);background-size:cover;background-position:50% 50%}
+.cn115{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:var(--space-014);padding-bottom:4px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn115::after{content:"";display:block;width:0px;height:0px}
+.cn116{width:100%;height:73.5938px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn117{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;color:var(--color-002);font-size:var(--font-size-007);line-height:var(--line-height-006);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn118{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn119{height:58px;display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-012);font-weight:var(--font-weight-004);line-height:var(--line-height-008);text-align:center}
+.cn120{display:inline;color:var(--color-001);font-weight:var(--font-weight-001);text-align:start}
+.cn121{display:inline;color:var(--color-001);font-weight:var(--font-weight-001);text-align:start}
+.cn122{height:15.5938px;display:block;text-align:center}
+.cn123{display:inline;font-weight:var(--font-weight-003)}
+.cn124{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-021);padding-bottom:53px;background-color:var(--background);background-size:cover;background-position:50% 50%}
+.cn125{height:399.141px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;overflow-x:hidden;overflow-y:hidden;cursor:grab}
+.cn126{width:1280px;height:100%;display:block;position:absolute;top:0px;transform:matrix(1, 0, 0, 1, -2060.03, 0);transform-origin:640px 199.57px}
+.cn127{width:1080px;height:335.562px;display:block;position:absolute;max-width:1080px;margin-top:var(--space-018);padding-bottom:var(--space-004);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;transform:matrix(1, 0, 0, 1, 3240, 0);transform-origin:540px 167.781px}
+.cn127::after{content:"";display:block;width:0px;height:0px}
+.cn128{width:510.297px;height:231.766px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);opacity:0.7;margin-right:59.3906px;padding-top:var(--space-011);padding-right:var(--space-017);padding-bottom:var(--space-011);padding-left:var(--space-017);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-color:rgba(255, 255, 255, 0);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;transform:matrix(0.8, 0, 0, 0.8, 0, 0);transform-origin:255.148px 115.883px}
+.cn129{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-020);line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn130{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn131{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-005);color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-007);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn132{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn133{display:block}
+.cn134{display:inline;font-weight:var(--font-weight-001);text-align:start}
+.cn135{display:inline;font-weight:var(--font-weight-001);text-align:start}
+.cn136{display:inline;font-weight:var(--font-weight-003)}
+.cn137{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn138{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn139{width:510.297px;height:332.562px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);opacity:0.7;padding-top:var(--space-011);padding-right:var(--space-017);padding-bottom:var(--space-011);padding-left:var(--space-017);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-color:rgb(228, 246, 243);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;transform:matrix(0.8, 0, 0, 0.8, 0, 0);transform-origin:255.148px 166.281px}
+.cn140{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-017);margin-bottom:var(--space-020);line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn141{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn142{height:23.7969px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-005);color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-007);font-weight:var(--font-weight-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn143{height:23.7969px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn144{height:23.7969px;display:block}
+.cn145{display:inline}
+.cn146{height:153.562px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:26.2031px;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn147{height:153.562px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn148{height:32px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:-13px;text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn149{height:32px;display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:4.8px;border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);color:var(--accent);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-013);text-decoration-line:underline;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn149::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(39, 156, 133);font-size:32px;line-height:32px;text-align:left;opacity:0}
+.cn149::after{content:"$";display:block;position:absolute;top:0px;right:-20.7969px;bottom:4.79688px;left:229.484px;width:16px;height:27.2031px;margin-left:4.8px;color:rgb(39, 156, 133);font-size:var(--font-size-005);line-height:var(--line-height-013);text-align:left}
+.cn150{width:1080px;height:335.562px;display:block;position:absolute;max-width:1080px;margin-top:var(--space-018);padding-bottom:var(--space-004);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;transform:matrix(1, 0, 0, 1, 1080, 0);transform-origin:540px 167.781px}
+.cn150::after{content:"";display:block;width:0px;height:0px}
+.cn151{width:510.297px;height:231.766px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);opacity:0.7;margin-right:59.3906px;padding-top:var(--space-011);padding-right:var(--space-017);padding-bottom:var(--space-011);padding-left:var(--space-017);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-color:rgba(255, 255, 255, 0);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;transform:matrix(0.8, 0, 0, 0.8, 0, 0);transform-origin:255.148px 115.883px}
+.cn152{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-020);line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn153{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn154{height:23.7969px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-005);color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-007);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn155{height:23.7969px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn156{height:23.7969px;display:block}
+.cn157{display:inline;font-weight:var(--font-weight-001);text-align:start}
+.cn158{display:inline;font-weight:var(--font-weight-001);text-align:start}
+.cn159{display:inline;font-weight:var(--font-weight-003)}
+.cn160{height:127.969px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn161{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn162{width:510.297px;height:332.562px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);opacity:0.7;padding-top:var(--space-011);padding-right:var(--space-017);padding-bottom:var(--space-011);padding-left:var(--space-017);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-color:rgb(228, 246, 243);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;transform:matrix(0.8, 0, 0, 0.8, 0, 0);transform-origin:255.148px 166.281px}
+.cn163{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-017);margin-bottom:var(--space-020);line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn164{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn165{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-005);color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-007);font-weight:var(--font-weight-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn166{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn167{height:100%;display:block}
+.cn168{display:inline;font-weight:var(--font-weight-001);text-align:start}
+.cn169{display:inline;font-weight:var(--font-weight-001);text-align:start}
+.cn170{display:inline}
+.cn171{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:26.2031px;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn172{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn173{display:block}
+.cn174{height:32px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:-13px;text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn175{height:32px;display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:4.8px;border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);color:var(--accent);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-013);text-decoration-line:underline;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn175::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(39, 156, 133);font-size:32px;line-height:32px;text-align:left;opacity:0}
+.cn175::after{content:"$";display:block;position:absolute;top:0px;right:-20.7969px;bottom:4.79688px;left:213.844px;width:16px;height:27.2031px;margin-left:4.8px;color:rgb(39, 156, 133);font-size:var(--font-size-005);line-height:var(--line-height-013);text-align:left}
+.cn176{width:1080px;height:361.156px;display:block;position:absolute;max-width:1080px;margin-top:var(--space-018);padding-bottom:var(--space-004);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;transform:matrix(1, 0, 0, 1, 2160, 0);transform-origin:540px 180.578px}
+.cn176::after{content:"";display:block;width:0px;height:0px}
+.cn177{width:510.297px;height:308.547px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:59.3906px;padding-top:var(--space-011);padding-right:var(--space-017);padding-bottom:var(--space-011);padding-left:var(--space-017);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-color:rgba(255, 255, 255, 0);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;transform:none}
+.cn178{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-020);line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn179{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn180{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-005);color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-007);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn181{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn182{height:100%;display:block}
+.cn183{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn184{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn185{width:510.297px;height:358.156px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);padding-top:var(--space-011);padding-right:var(--space-017);padding-bottom:var(--space-011);padding-left:var(--space-017);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-color:rgb(228, 246, 243);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;transform:none}
+.cn186{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-017);margin-bottom:var(--space-020);line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn187{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn188{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-005);color:var(--color-001);font-family:var(--font-001);font-size:var(--font-size-007);font-weight:var(--font-weight-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn189{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn190{height:23.7969px;display:block}
+.cn191{display:inline;font-weight:var(--font-weight-001);text-align:start}
+.cn192{display:inline;font-weight:var(--font-weight-001);text-align:start}
+.cn193{display:inline}
+.cn194{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:26.2031px;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn195{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn196{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:-13px;text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn197{display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:4.8px;border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);color:var(--accent);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-013);text-decoration-line:underline;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn197::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(39, 156, 133);font-size:32px;line-height:32px;text-align:left;opacity:0}
+.cn197::after{content:"$";display:block;position:absolute;top:0px;right:-20.7969px;bottom:4.79688px;left:200.484px;width:16px;height:27.2031px;margin-left:4.8px;color:rgb(39, 156, 133);font-size:var(--font-size-005);line-height:var(--line-height-013);text-align:left}
+.cn198{width:44px;height:44px;display:block;position:absolute;top:clamp(251.7px, 50%, calc(100% - 251.7px));left:10px;padding-top:var(--space-002);padding-right:var(--space-006);padding-bottom:var(--space-002);padding-left:var(--space-006);border-top-left-radius:var(--radius-005);border-top-right-radius:var(--radius-005);border-bottom-right-radius:var(--radius-005);border-bottom-left-radius:var(--radius-005);color:var(--border);font-size:var(--font-size-002);font-weight:var(--font-weight-001);line-height:var(--line-height-012);text-align:center;background-color:rgba(255, 255, 255, 0.75);transform:matrix(1, 0, 0, 1, 0, -22);transform-origin:22px 22px;cursor:default}
+.cn199{width:auto;height:26px;display:block;position:absolute;top:8.79688px;left:8.79688px;overflow-x:hidden;overflow-y:hidden}
+.cn200{width:44px;height:44px;display:block;position:absolute;top:clamp(251.7px, 50%, calc(100% - 251.7px));right:10px;padding-top:var(--space-002);padding-right:var(--space-006);padding-bottom:var(--space-002);padding-left:var(--space-006);border-top-left-radius:var(--radius-005);border-top-right-radius:var(--radius-005);border-bottom-right-radius:var(--radius-005);border-bottom-left-radius:var(--radius-005);color:var(--border);font-size:var(--font-size-002);font-weight:var(--font-weight-001);line-height:var(--line-height-012);text-align:center;background-color:rgba(255, 255, 255, 0.75);transform:matrix(1, 0, 0, 1, 0, -22);transform-origin:22px 22px;cursor:default}
+.cn201{width:auto;height:26px;display:block;position:absolute;top:8.79688px;left:8.79688px;overflow-x:hidden;overflow-y:hidden}
+.cn202{height:49px;display:block;position:absolute;right:0px;bottom:-25px;left:0px;padding-bottom:23px;line-height:var(--line-height-009);text-align:center;list-style-type:decimal;list-style-position:inside}
+.cn203{height:10px;display:inline-block;opacity:0.25;margin-right:var(--space-008);margin-left:var(--space-008);border-top-left-radius:var(--radius-005);border-top-right-radius:var(--radius-005);border-bottom-right-radius:var(--radius-005);border-bottom-left-radius:var(--radius-005);background-color:var(--border);cursor:pointer}
+.cn204{height:10px;display:inline-block;opacity:0.25;margin-right:var(--space-008);margin-left:var(--space-008);border-top-left-radius:var(--radius-005);border-top-right-radius:var(--radius-005);border-bottom-right-radius:var(--radius-005);border-bottom-left-radius:var(--radius-005);background-color:var(--border);cursor:pointer}
+.cn205{height:10px;display:inline-block;margin-right:var(--space-008);margin-left:var(--space-008);border-top-left-radius:var(--radius-005);border-top-right-radius:var(--radius-005);border-bottom-right-radius:var(--radius-005);border-bottom-left-radius:var(--radius-005);background-color:var(--border);cursor:pointer}
+.cn206{display:none}
+.cn207{display:none;position:relative;padding-top:4%;padding-bottom:4%;background-color:var(--background);background-size:cover;background-position:50% 50%}
+.cn208{width:80%;display:block;position:relative;max-width:1080px;margin-top:auto;margin-bottom:auto;padding-top:2%;padding-bottom:2%;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn208::after{content:"";display:block;width:0px;height:0px}
+.cn209{min-height:1px;display:block;position:relative;float:left;z-index:var(--z-001);margin-right:5.5%;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn210{display:block;position:relative;margin-bottom:5.82%;line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn211{display:block;position:relative;max-width:100%}
+.cn212{display:inline;position:relative;max-width:100%;overflow-x:clip;overflow-y:clip}
+.cn213{display:block;position:relative;font-family:var(--font-001);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn214{display:block;position:relative}
+.cn215{display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-009);font-weight:var(--font-weight-004);line-height:var(--line-height-009);text-align:center}
+.cn216{display:block;padding-bottom:14px;text-align:center}
+.cn217{display:block;padding-bottom:14px;text-align:center}
+.cn218{display:block;text-align:center}
+.cn219{min-height:1px;display:block;position:relative;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn220{display:block;position:relative;margin-bottom:5.82%;line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn221{display:block;position:relative;max-width:100%}
+.cn222{display:inline;position:relative;max-width:100%;overflow-x:clip;overflow-y:clip}
+.cn223{display:block;position:relative;font-family:var(--font-001);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn224{display:block;position:relative}
+.cn225{display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-009);font-weight:var(--font-weight-004);line-height:var(--line-height-009);text-align:center}
+.cn226{display:block;padding-bottom:14px;text-align:center}
+.cn227{display:block;padding-bottom:14px;text-align:center}
+.cn228{display:block;text-align:center}
+.cn229{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:76px;padding-bottom:var(--space-021);background-color:var(--background);background-image:linear-gradient(rgba(255, 255, 255, 0.6) 0%, rgba(41, 196, 169, 0.6) 100%);background-size:cover;background-position:50% 50%}
+.cn230{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:var(--space-006);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn230::after{content:"";display:block;width:0px;height:0px}
+.cn231{width:100%;height:73.5938px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn232{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;color:var(--color-002);font-size:var(--font-size-007);line-height:var(--line-height-006);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn233{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn234{display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-012);font-weight:var(--font-weight-004);line-height:var(--line-height-008);text-align:center}
+.cn235{height:15.5938px;display:block;text-align:center}
+.cn236{display:inline;font-weight:var(--font-weight-003)}
+.cn237{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-top:64px;margin-right:128px;margin-bottom:var(--space-012);margin-left:128px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn237::after{content:"";display:block;width:0px;height:0px}
+.cn238{width:123.719px;height:58.7969px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:56.3125px;padding-top:var(--space-011);padding-bottom:var(--space-011);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-color:rgb(153, 222, 209);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn239{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-006);line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn240{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn241{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-002);font-size:var(--font-size-004);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn242{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn243{display:block;text-align:center}
+.cn244{width:123.719px;height:58.7969px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:56.3125px;padding-top:var(--space-011);padding-bottom:var(--space-011);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn245{width:50px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-right:auto;margin-bottom:var(--space-006);margin-left:auto;line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn246{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn247{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-002);font-size:var(--font-size-004);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn248{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn249{display:block;text-align:center}
+.cn250{width:123.719px;height:58.7969px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:56.3125px;padding-top:var(--space-011);padding-bottom:var(--space-011);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn251{width:50px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-right:auto;margin-bottom:var(--space-006);margin-left:auto;line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn252{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn253{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-002);font-size:var(--font-size-004);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn254{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn255{display:block;text-align:center}
+.cn256{width:123.719px;height:58.7969px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:56.3125px;padding-top:var(--space-011);padding-bottom:var(--space-011);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn257{width:50px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-right:auto;margin-bottom:var(--space-006);margin-left:auto;line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn258{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn259{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-002);font-size:var(--font-size-004);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn260{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn261{display:block;text-align:center}
+.cn262{width:123.719px;height:58.7969px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:56.3125px;padding-top:var(--space-011);padding-bottom:var(--space-011);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn263{width:50px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-right:auto;margin-bottom:var(--space-006);margin-left:auto;line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn264{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn265{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-002);font-size:var(--font-size-004);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn266{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn267{display:block;text-align:center}
+.cn268{width:123.719px;height:58.7969px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);padding-top:var(--space-011);padding-bottom:var(--space-011);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn269{width:50px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-right:auto;margin-bottom:var(--space-006);margin-left:auto;line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn270{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn271{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;font-family:var(--font-002);font-size:var(--font-size-004);font-weight:var(--font-weight-004);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn272{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn273{display:block;text-align:center}
+.cn274{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-bottom:var(--space-014);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn274::after{content:"";display:block;width:0px;height:0px}
+.cn275{width:100%;height:33.1562px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn276{width:650px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-right:auto;margin-bottom:var(--space-015);margin-left:auto;line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn277{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%;border-top-left-radius:12px;border-top-right-radius:12px;border-bottom-right-radius:12px;border-bottom-left-radius:12px;overflow-x:hidden;overflow-y:hidden;box-shadow:rgb(121, 212, 194) 0px 8px 92px 0px}
+.cn278{height:100%;display:block;position:absolute;top:0px;right:0px;left:0px;z-index:10;pointer-events:none}
+.cn279{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:25px;padding-bottom:var(--space-014);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn279::after{content:"";display:block;width:0px;height:0px}
+.cn280{width:483.828px;height:182.438px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:56.3125px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn281{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-010);line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn282{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn283{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;color:var(--color-001);font-family:var(--font-002);line-height:var(--line-height-005);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn284{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn285{display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-001);font-size:var(--font-size-006);font-weight:var(--font-weight-004);line-height:var(--line-height-004)}
+.cn286{display:block}
+.cn287{width:483.828px;height:168.578px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn288{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-010);line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn289{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn290{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-015);color:var(--color-001);font-family:var(--font-002);line-height:var(--line-height-005);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn291{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn292{display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-001);font-size:var(--font-size-006);font-weight:var(--font-weight-004);line-height:var(--line-height-004)}
+.cn293{display:block}
+.cn294{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:-12px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn295{display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-005);padding-right:var(--space-018);padding-bottom:var(--space-005);padding-left:var(--space-013);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);color:var(--background);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-013);background-color:var(--accent);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn295::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(255, 255, 255);font-size:32px;line-height:32px;opacity:0}
+.cn295::after{content:"$";display:block;position:absolute;top:5px;right:17.2031px;bottom:5px;left:212.891px;width:16px;height:27.2031px;margin-left:4.8px;color:rgb(255, 255, 255);font-size:var(--font-size-005);line-height:var(--line-height-013)}
+.cn296{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:var(--space-014);padding-bottom:var(--space-014);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn296::after{content:"";display:block;width:0px;height:0px}
+.cn297{width:100%;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn298{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn299{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn300{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-021);padding-bottom:var(--space-003);background-color:var(--background);background-size:cover;background-position:50% 50%}
+.cn301{width:80%;display:none;position:relative;max-width:1080px;margin-top:auto;margin-bottom:auto;padding-top:2%;padding-bottom:2%;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn301::after{content:"";display:block;width:0px;height:0px}
+.cn302{min-height:1px;display:block;position:relative;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn303{display:block;position:relative;line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn304{display:block;position:relative;max-width:100%}
+.cn305{display:block;position:relative;margin-top:86px;margin-bottom:var(--space-005);font-family:var(--font-001);font-size:var(--font-size-008);font-weight:var(--font-weight-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn306{display:block;position:relative}
+.cn307{display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-011);font-weight:var(--font-weight-004);line-height:var(--line-height-014)}
+.cn308{display:inline}
+.cn309{display:block;position:relative;margin-bottom:2.75%;padding-bottom:var(--space-008);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn310{display:block;position:relative}
+.cn311{display:block}
+.cn312{display:block;position:relative;margin-top:var(--space-008);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn313{display:inline-block;position:relative;padding-bottom:4.2px;border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);color:var(--accent);font-family:var(--font-001);text-decoration-line:underline;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn313::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(39, 156, 133);font-size:32px;line-height:32px;text-align:left;opacity:0}
+.cn313::after{content:"$";display:block;position:absolute;margin-left:4.2px;color:rgb(39, 156, 133);font-size:var(--font-size-003);line-height:var(--line-height-001);text-align:left}
+.cn314{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:auto;margin-left:auto;padding-top:var(--space-014);padding-bottom:var(--space-014);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn314::after{content:"";display:block;width:0px;height:0px}
+.cn315{width:540px;height:5px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn316{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;line-height:var(--line-height-002);text-align:center;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn317{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn318{width:540px;height:365.953px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn319{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:86px;margin-bottom:var(--space-005);font-family:var(--font-001);font-size:var(--font-size-008);font-weight:var(--font-weight-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn320{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn321{height:102px;display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-011);font-weight:var(--font-weight-004);line-height:var(--line-height-014)}
+.cn322{display:inline}
+.cn323{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:var(--space-008);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn324{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn325{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-008);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn326{display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:4.2px;border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);color:var(--accent);font-family:var(--font-001);text-decoration-line:underline;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn326::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(39, 156, 133);font-size:32px;line-height:32px;text-align:left;opacity:0}
+.cn326::after{content:"$";display:block;position:absolute;top:0px;right:-18.1875px;bottom:4.1875px;left:175.438px;width:14px;height:23.7969px;margin-left:4.2px;color:rgb(39, 156, 133);font-size:var(--font-size-003);line-height:var(--line-height-001);text-align:left}
+.cn327{width:80%;display:none;position:relative;max-width:1080px;margin-top:auto;margin-bottom:auto;padding-top:2%;padding-bottom:2%;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn327::after{content:"";display:block;width:0px;height:0px}
+.cn328{min-height:1px;display:block;position:relative;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn329{display:block;position:relative;margin-bottom:2.75%;line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn330{display:block;position:relative;max-width:100%}
+.cn331{display:block;position:relative;margin-top:86px;margin-bottom:var(--space-005);font-family:var(--font-001);font-size:var(--font-size-008);font-weight:var(--font-weight-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn332{display:block;position:relative}
+.cn333{display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-011);font-weight:var(--font-weight-004);line-height:var(--line-height-014)}
+.cn334{display:block;position:relative;margin-bottom:2.75%;padding-bottom:var(--space-008);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn335{display:block;position:relative}
+.cn336{display:block}
+.cn337{display:inline;color:var(--primary);cursor:pointer}
+.cn338{display:block;position:relative;margin-top:var(--space-008);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn339{display:inline-block;position:relative;padding-bottom:4.2px;border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);color:var(--accent);font-family:var(--font-001);text-decoration-line:underline;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn339::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(39, 156, 133);font-size:32px;line-height:32px;text-align:left;opacity:0}
+.cn339::after{content:"$";display:block;position:absolute;margin-left:4.2px;color:rgb(39, 156, 133);font-size:var(--font-size-003);line-height:var(--line-height-001);text-align:left}
+.cn340{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:auto;margin-left:auto;padding-top:var(--space-014);padding-bottom:116px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn340::after{content:"";display:block;width:0px;height:0px}
+.cn341{width:512px;height:442.734px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn342{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:86px;margin-bottom:var(--space-005);font-family:var(--font-001);font-size:var(--font-size-008);font-weight:var(--font-weight-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn343{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn344{display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-011);font-weight:var(--font-weight-004);line-height:var(--line-height-014)}
+.cn345{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:var(--space-008);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn346{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn347{height:204.75px;display:block}
+.cn348{display:inline;color:var(--primary);cursor:pointer}
+.cn349{display:inline;text-decoration-line:underline}
+.cn350{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-008);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn351{display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-bottom:4.2px;border-top-left-radius:var(--radius-001);border-top-right-radius:var(--radius-001);border-bottom-right-radius:var(--radius-001);border-bottom-left-radius:var(--radius-001);color:var(--accent);font-family:var(--font-001);text-decoration-line:underline;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn351::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(39, 156, 133);font-size:32px;line-height:32px;text-align:left;opacity:0}
+.cn351::after{content:"$";display:block;position:absolute;top:0px;right:-18.1875px;bottom:4.1875px;left:90.7188px;width:14px;height:23.7969px;margin-left:4.2px;color:rgb(39, 156, 133);font-size:var(--font-size-003);line-height:var(--line-height-001);text-align:left}
+.cn352{width:512px;height:5px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn353{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn354{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn355{width:1024px;height:265.641px;min-height:237.2px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:16px;padding-right:var(--space-022);padding-bottom:34px;padding-left:var(--space-022);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-image:url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn355::after{content:"";display:block;width:0px;height:0px}
+.cn356{width:100%;height:215.641px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn357{height:102px;min-height:97px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:32px;margin-bottom:22.4375px;text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn358{height:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn359{height:100%;display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-011);font-weight:var(--font-weight-003);line-height:var(--line-height-014)}
+.cn360{display:inline}
+.cn361{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:16px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn362{display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-008);padding-right:var(--space-019);padding-bottom:var(--space-008);padding-left:var(--space-013);border-top-left-radius:var(--radius-002);border-top-right-radius:var(--radius-002);border-bottom-right-radius:var(--radius-002);border-bottom-left-radius:var(--radius-002);color:var(--background);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-013);background-color:var(--accent);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn362::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(255, 255, 255);font-size:32px;line-height:32px;opacity:0}
+.cn362::after{content:"$";display:block;position:absolute;top:8px;right:19.2031px;bottom:8px;left:115.781px;width:16px;height:27.2031px;margin-left:4.8px;color:rgb(255, 255, 255);font-size:var(--font-size-005);line-height:var(--line-height-013)}
+.cn363{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-021);padding-bottom:var(--space-021);background-color:var(--background);background-size:cover;background-position:50% 50%}
+.cn364{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:var(--space-014);padding-bottom:var(--space-014);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn364::after{content:"";display:block;width:0px;height:0px}
+.cn365{width:100%;height:270.594px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn366{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:17px;padding-bottom:var(--space-017);color:var(--color-002);font-size:var(--font-size-007);line-height:var(--line-height-006);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn367{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn368{height:58px;display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-012);font-weight:var(--font-weight-004);line-height:var(--line-height-008);text-align:center}
+.cn369{display:inline;color:var(--color-001);font-weight:var(--font-weight-001);text-align:start}
+.cn370{display:inline;color:var(--color-001);font-weight:var(--font-weight-001);text-align:start}
+.cn371{height:15.5938px;display:block;text-align:center}
+.cn372{display:inline;font-weight:var(--font-weight-003)}
+.cn373{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn374{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;z-index:1;line-height:var(--line-height-002)}
+.cn375{width:100%;height:150px;display:inline;max-width:100%;overflow-x:clip;overflow-y:clip;object-fit:contain}
+.cn376{display:inline;color:var(--color-001);font-family:"Times New Roman";font-size:var(--font-size-005);font-weight:var(--font-weight-001);line-height:var(--line-height-012)}
+.cn377{height:100%;display:block;position:absolute;top:0px;right:0px;left:0px;z-index:10;background-image:url("public/assets/cloned/images/774645211a22.jpg");background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn378{height:100%;display:block;position:absolute;top:0px;right:0px;left:0px;z-index:100;background-color:rgba(255, 255, 255, 0)}
+.cn379{height:101px;display:block;position:absolute;top:75px;right:464px;left:512px;z-index:100;margin-top:-48px;margin-left:-48px;color:var(--background);font-size:96px;line-height:96px}
+.cn379::before{content:"I";color:rgb(255, 255, 255);font-size:96px;font-weight:var(--font-weight-002);line-height:96px}
+.cn380{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-003);padding-bottom:96px;background-color:var(--background);background-size:cover;background-position:50% 50%}
+.cn381{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:var(--space-003);padding-bottom:var(--space-014);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn381::after{content:"";display:block;width:0px;height:0px}
+.cn382{width:100%;height:186px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn383{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:128px;color:var(--color-002);font-size:var(--font-size-007);line-height:var(--line-height-006);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn384{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn385{display:block;padding-bottom:var(--space-010);color:var(--border);font-family:var(--font-002);font-size:var(--font-size-012);font-weight:var(--font-weight-004);line-height:var(--line-height-008);text-align:center}
+.cn386{display:block;text-align:center}
+.cn387{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:var(--space-014);padding-bottom:110px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn387::after{content:"";display:block;width:0px;height:0px}
+.cn388{height:645.062px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn389{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn390{height:645.062px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn390::after{content:" ";display:block;width:100%;height:0px;color:rgb(102, 102, 102);font-size:0px;font-weight:var(--font-weight-002);line-height:var(--line-height-001)}
+.cn391{display:block}
+.cn392{display:block}
+.cn392::before{content:"3 .column.size-1of3";display:none;position:absolute;color:rgb(102, 102, 102);font-size:1px;font-weight:var(--font-weight-002);line-height:var(--line-height-002);opacity:0}
+.cn393{width:303.781px;display:block;float:left;max-width:100%;margin-right:56.3125px}
+.cn394{display:block;margin-bottom:var(--space-017);padding-top:var(--space-012);padding-bottom:var(--space-012);overflow-wrap:break-word;background-color:var(--background)}
+.cn394::after{content:" ";display:block;width:100%;height:0px;color:rgb(102, 102, 102);font-size:0px;font-weight:var(--font-weight-002);line-height:var(--line-height-001)}
+.cn395{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-001);margin-right:var(--space-001);margin-bottom:var(--space-016);margin-left:var(--space-001);padding-top:var(--space-012);padding-right:var(--space-012);padding-bottom:var(--space-012);padding-left:var(--space-012)}
+.cn396{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);overflow-x:hidden;overflow-y:hidden;color:var(--primary);cursor:pointer}
+.cn397{width:306px;height:191px;display:inline;min-width:100%;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 400 / 250;vertical-align:bottom}
+.cn398{display:block;padding-bottom:var(--space-010);color:var(--border);font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn399{display:inline;font-family:var(--font-002);font-weight:var(--font-weight-004);cursor:pointer}
+.cn400{display:block;margin-bottom:var(--space-006);color:var(--muted-foreground);font-family:var(--font-001);font-size:var(--font-size-001);line-height:var(--line-height-010);text-align:left}
+.cn401{display:inline}
+.cn402{display:block;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn403{display:block}
+.cn404{display:block}
+.cn405{display:none}
+.cn405::after{content:" ";display:block;width:300px;height:0px;color:rgb(102, 102, 102);font-size:0px;font-weight:var(--font-weight-002);line-height:var(--line-height-001)}
+.cn406{display:none}
+.cn407{display:none}
+.cn408{display:none}
+.cn409{display:none}
+.cn410{display:none}
+.cn411{display:none}
+.cn412{display:none}
+.cn413{display:none}
+.cn414{display:none}
+.cn415{display:none}
+.cn416{display:none}
+.cn416::after{content:" ";display:block;width:100%;height:0px;color:rgb(102, 102, 102);font-size:0px;font-weight:var(--font-weight-002);line-height:var(--line-height-001)}
+.cn417{display:none}
+.cn418{display:none}
+.cn419{display:none}
+.cn420{display:none}
+.cn421{display:none}
+.cn422{display:none}
+.cn423{display:none}
+.cn424{display:none}
+.cn425{display:none}
+.cn426{display:none}
+.cn427{width:303.781px;display:block;float:left;max-width:100%;margin-right:56.3125px}
+.cn428{display:block;margin-bottom:var(--space-017);padding-top:var(--space-012);padding-bottom:var(--space-012);overflow-wrap:break-word;background-color:var(--background)}
+.cn428::after{content:" ";display:block;width:100%;height:0px;color:rgb(102, 102, 102);font-size:0px;font-weight:var(--font-weight-002);line-height:var(--line-height-001)}
+.cn429{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-001);margin-right:var(--space-001);margin-bottom:var(--space-016);margin-left:var(--space-001);padding-top:var(--space-012);padding-right:var(--space-012);padding-bottom:var(--space-012);padding-left:var(--space-012)}
+.cn430{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);overflow-x:hidden;overflow-y:hidden;color:var(--primary);cursor:pointer}
+.cn431{width:306px;height:191px;display:inline;min-width:100%;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 400 / 250;vertical-align:bottom}
+.cn432{display:block;padding-bottom:var(--space-010);color:var(--border);font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn433{display:inline;font-family:var(--font-002);font-weight:var(--font-weight-004);cursor:pointer}
+.cn434{display:block;margin-bottom:var(--space-006);color:var(--muted-foreground);font-family:var(--font-001);font-size:var(--font-size-001);line-height:var(--line-height-010);text-align:left}
+.cn435{display:inline}
+.cn436{display:block;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn437{display:block}
+.cn438{display:block}
+.cn439{width:303.781px;display:block;float:left;max-width:100%}
+.cn440{display:block;margin-bottom:var(--space-017);padding-top:var(--space-012);padding-bottom:var(--space-012);overflow-wrap:break-word;background-color:var(--background)}
+.cn440::after{content:" ";display:block;width:100%;height:0px;color:rgb(102, 102, 102);font-size:0px;font-weight:var(--font-weight-002);line-height:var(--line-height-001)}
+.cn441{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-001);margin-right:var(--space-001);margin-bottom:var(--space-016);margin-left:var(--space-001);padding-top:var(--space-012);padding-right:var(--space-012);padding-bottom:var(--space-012);padding-left:var(--space-012)}
+.cn442{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);overflow-x:hidden;overflow-y:hidden;color:var(--primary);cursor:pointer}
+.cn443{width:306px;height:191px;display:inline;min-width:100%;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 400 / 250;vertical-align:bottom}
+.cn444{display:block;padding-bottom:var(--space-010);color:var(--border);font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn445{display:inline;font-family:var(--font-002);font-weight:var(--font-weight-004);cursor:pointer}
+.cn446{display:block;margin-bottom:var(--space-006);color:var(--muted-foreground);font-family:var(--font-001);font-size:var(--font-size-001);line-height:var(--line-height-010);text-align:left}
+.cn447{display:inline}
+.cn448{display:block;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn449{display:block}
+.cn450{display:block}
+.cn451{width:1024px;height:357.906px;min-height:319px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px;padding-top:var(--space-005);padding-right:var(--space-022);padding-bottom:4px;padding-left:var(--space-022);border-top-left-radius:var(--radius-004);border-top-right-radius:var(--radius-004);border-bottom-right-radius:var(--radius-004);border-bottom-left-radius:var(--radius-004);overflow-x:hidden;overflow-y:hidden;background-color:rgb(55, 74, 94);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn451::after{content:"";display:block;width:0px;height:0px}
+.cn452{width:385.547px;height:348.906px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);margin-right:44.875px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn453{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:74px;text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn454{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn455{display:block;padding-bottom:var(--space-010);color:var(--background);font-family:var(--font-002);font-size:var(--font-size-010);font-weight:var(--font-weight-003);line-height:var(--line-height-011)}
+.cn456{display:inline;color:var(--color-001);font-weight:var(--font-weight-001);text-align:start}
+.cn457{display:inline;color:var(--color-001);font-weight:var(--font-weight-001);text-align:start}
+.cn458{display:inline;color:var(--color-001);font-weight:var(--font-weight-001);text-align:start}
+.cn459{display:inline}
+.cn460{display:inline}
+.cn461{display:block}
+.cn462{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:44px;color:var(--background);font-family:var(--font-001);font-size:var(--font-size-006);text-align:left;overflow-wrap:break-word;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn463{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px}
+.cn464{display:block}
+.cn465{display:inline;color:var(--color-001);font-weight:var(--font-weight-001);text-align:start}
+.cn466{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:74px;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn467{display:inline-block;position:relative;top:0px;right:0px;bottom:0px;left:0px;padding-top:var(--space-010);padding-right:var(--space-019);padding-bottom:var(--space-010);padding-left:20px;border-top-left-radius:9px;border-top-right-radius:9px;border-bottom-right-radius:9px;border-bottom-left-radius:9px;color:rgb(6, 38, 102);font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-013);background-color:var(--background);background-size:cover;background-position:50% 50%;background-repeat:no-repeat;cursor:pointer}
+.cn467::before{content:"5";display:none;position:absolute;margin-left:-32px;color:rgb(6, 38, 102);font-size:32px;line-height:32px;opacity:0}
+.cn467::after{content:"$";display:block;position:absolute;top:10px;right:19.2031px;bottom:10px;left:173.016px;width:16px;height:27.2031px;margin-left:4.8px;color:rgb(6, 38, 102);font-size:var(--font-size-005);line-height:var(--line-height-013)}
+.cn468{width:385.547px;height:74px;min-height:1px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;float:left;z-index:var(--z-001);background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn469{width:100%;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:69px;margin-right:-59px;margin-left:59px;line-height:var(--line-height-002);text-align:left;background-size:cover;background-position:50% 50%;background-repeat:no-repeat}
+.cn470{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:100%}
+.cn471{display:block}
+.cn472{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px}
+.cn473{height:251.578px;display:block}
+.cn473::after{content:" ";display:block;width:100%;height:0px;color:rgb(102, 102, 102);font-size:0px;font-weight:var(--font-weight-002);line-height:var(--line-height-001)}
+.cn474{display:block}
+.cn475{height:251.578px;display:block;float:left;max-width:100%;overflow-wrap:break-word}
+.cn476{display:block}
+.cn477{display:block;padding-bottom:var(--space-010);color:var(--border);font-size:var(--font-size-009);line-height:var(--line-height-009)}
+.cn478{display:block;list-style-type:none;list-style-position:outside}
+.cn479{display:list-item;margin-bottom:var(--space-007)}
+.cn480{display:inline;cursor:pointer}
+.cn481{height:23.7969px;display:list-item;margin-bottom:var(--space-007)}
+.cn482{display:inline;cursor:pointer}
+.cn483{height:23.7969px;display:list-item;margin-bottom:var(--space-007)}
+.cn484{display:inline;cursor:pointer}
+.cn485{display:list-item;margin-bottom:var(--space-007)}
+.cn486{display:inline;cursor:pointer}
+.cn487{display:list-item;margin-bottom:var(--space-007)}
+.cn488{display:inline;cursor:pointer}
+.cn489{display:list-item;margin-bottom:var(--space-007)}
+.cn490{display:inline;cursor:pointer}
+.cn491{display:list-item;margin-bottom:var(--space-007)}
+.cn492{display:inline;cursor:pointer}
+.cn493{height:97.5938px;display:block;float:left;max-width:100%;overflow-wrap:break-word}
+.cn494{display:block}
+.cn495{display:block;padding-bottom:var(--space-010);color:var(--border);font-size:var(--font-size-009);line-height:var(--line-height-009)}
+.cn496{display:block;list-style-type:none;list-style-position:outside}
+.cn497{display:list-item;margin-bottom:var(--space-007)}
+.cn498{display:inline;cursor:pointer}
+.cn499{height:23.7969px;display:list-item;margin-bottom:var(--space-007)}
+.cn500{display:inline;cursor:pointer}
+.cn501{display:block}
+.cn502{display:block}
+.cn503{display:block}
+.cn504{display:block}
+.cn505{width:1024px;display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;max-width:1080px;margin-right:128px;margin-left:128px}
+.cn505::after{content:" ";display:block;width:100%;height:0px;color:rgb(102, 102, 102);font-size:0px;font-weight:var(--font-weight-002);line-height:var(--line-height-001)}
+.cn506{display:block;list-style-type:none;list-style-position:outside}
+.cn507{display:list-item}
+.cn508{display:inline;color:var(--primary);cursor:pointer}
+.cn508::before{content:"";color:rgb(46, 163, 242);font-size:var(--font-size-003);line-height:var(--line-height-007)}
+.cn509{display:inline}
+.cn510{display:list-item}
+.cn511{display:inline;color:var(--primary);cursor:pointer}
+.cn511::before{content:"";color:rgb(46, 163, 242);font-size:var(--font-size-003);line-height:var(--line-height-007)}
+.cn512{display:inline}
+.cn513{display:list-item}
+.cn514{display:inline;color:var(--primary);cursor:pointer}
+.cn514::before{content:"";color:rgb(46, 163, 242);font-size:var(--font-size-003);line-height:var(--line-height-007)}
+.cn515{display:inline}
+.cn516{display:list-item}
+.cn517{display:inline;color:var(--primary);cursor:pointer}
+.cn517::before{content:"";color:rgb(46, 163, 242);font-size:var(--font-size-003);line-height:var(--line-height-007)}
+.cn518{display:inline}
+.cn519{height:23.7969px;display:block}
+.cn520{display:inline;color:var(--primary);cursor:pointer}
+.cn521{display:inline;color:var(--primary);cursor:pointer}
+.cn522{height:100%;display:block;position:fixed;top:0px;right:0px;left:0px;z-index:9999;pointer-events:none}
+.cn523{display:block}
+
+@media (max-width: 571px) {
+.cn7{padding-top:174px}
+.cn9{width:300px;margin-right:37.5px;margin-left:37.5px}
+.cn9::after{}
+.cn33{width:300px;margin-right:37.5px;margin-left:37.5px}
+.cn42{height:730.797px;padding-top:50px;padding-bottom:50px}
+.cn43{width:300px;margin-top:75px;margin-right:37.5px;margin-left:37.5px}
+.cn44{width:300px;height:404.859px;margin-bottom:var(--space-017);margin-right:0}
+.cn45{margin-top:24px}
+.cn47{font-size:var(--font-size-011);line-height:var(--line-height-014)}
+.cn49{display:none}
+.cn50{font-size:inherit}
+.cn56{font-size:inherit;line-height:inherit}
+.cn56::after{right:27.8125px;left:174.359px;width:14px;margin-left:4.2px;font-size:var(--font-size-003);line-height:var(--line-height-001)}
+.cn57{margin-top:20px;padding-top:3.9px;padding-right:26px;padding-bottom:3.9px;padding-left:4px;font-size:13px;line-height:22.1px;margin-left:0}
+.cn57::after{top:3.89062px;right:9.10938px;bottom:3.89062px;left:73.9531px;width:13px;margin-left:3.9px;font-size:13px;line-height:22.1px}
+.cn58{display:none}
+.cn62{padding-bottom:50px}
+.cn63{width:300px;margin-right:37.5px;margin-left:37.5px}
+.cn64{height:106px}
+.cn68{width:300px;margin-right:37.5px;margin-left:37.5px}
+.cn69{width:300px;margin-bottom:var(--space-017);margin-right:0}
+.cn70{margin-right:268px}
+.cn79{width:300px;margin-bottom:var(--space-017);margin-right:0}
+.cn80{margin-right:268px}
+.cn88{width:300px}
+.cn89{margin-right:268px}
+.cn97{padding-top:50px;padding-bottom:50px}
+.cn98{width:300px;height:523.578px;margin-right:37.5px;margin-left:37.5px}
+.cn99{height:421.578px}
+.cn100{height:88px}
+.cn104{max-width:90%;margin-right:15px;margin-bottom:var(--space-017);margin-left:15px}
+.cn107{max-width:90%;margin-right:15px;margin-bottom:var(--space-017);margin-left:15px}
+.cn109{height:190.375px}
+.cn114{padding-top:50px}
+.cn115{width:300px;margin-right:37.5px;margin-left:37.5px;padding-top:var(--space-017)}
+.cn116{height:154px}
+.cn117{line-height:24px}
+.cn119{height:106px}
+.cn122{height:48px}
+.cn124{display:none}
+.cn149::after{top:auto;right:auto;bottom:auto;left:auto;width:auto;height:auto}
+.cn175::after{top:auto;right:auto;bottom:auto;left:auto;width:auto;height:auto}
+.cn197::after{top:auto;right:auto;bottom:auto;left:auto;width:auto;height:auto}
+.cn205{display:none}
+.cn207{display:block;top:0px;right:0px;bottom:0px;left:0px;padding-top:50px;padding-bottom:50px}
+.cn208{width:300px;height:571.766px;top:0px;right:0px;bottom:0px;left:0px;margin-right:37.5px;margin-left:37.5px;padding-top:var(--space-017);padding-bottom:var(--space-017);margin-top:0;margin-bottom:0}
+.cn209{height:228.984px;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017);margin-right:0}
+.cn210{top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017)}
+.cn211{top:0px;right:0px;bottom:0px;left:0px}
+.cn212{width:218px;height:16px;top:0px;right:0px;bottom:0px;left:0px}
+.cn213{top:0px;right:0px;bottom:0px;left:0px}
+.cn214{top:0px;right:0px;bottom:0px;left:0px}
+.cn219{height:252.781px;top:0px;right:0px;bottom:0px;left:0px}
+.cn220{top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017)}
+.cn221{top:0px;right:0px;bottom:0px;left:0px}
+.cn222{width:157px;height:16px;top:0px;right:0px;bottom:0px;left:0px}
+.cn223{top:0px;right:0px;bottom:0px;left:0px}
+.cn224{top:0px;right:0px;bottom:0px;left:0px}
+.cn229{padding-bottom:50px}
+.cn230{width:300px;margin-right:37.5px;margin-left:37.5px}
+.cn231{height:154px}
+.cn232{line-height:24px}
+.cn235{height:48px}
+.cn237{width:300px;display:flex;margin-right:37.5px;margin-left:37.5px;flex-wrap:wrap}
+.cn238{width:90px;height:82.5938px;margin-right:15px;margin-bottom:var(--space-017)}
+.cn244{width:90px;height:82.5938px;margin-right:15px;margin-bottom:var(--space-017)}
+.cn250{width:90px;height:82.5938px;margin-bottom:var(--space-017);margin-right:0}
+.cn256{width:90px;height:82.5938px;margin-right:15px;margin-bottom:var(--space-017)}
+.cn262{width:90px;height:82.5938px;margin-right:15px;margin-bottom:var(--space-017)}
+.cn268{width:90px;height:112.594px}
+.cn274{width:300px;margin-right:37.5px;margin-left:37.5px;padding-bottom:var(--space-017)}
+.cn275{height:35px}
+.cn276{width:300px;margin-bottom:var(--space-017);margin-right:0;margin-left:0}
+.cn279{width:300px;margin-right:37.5px;margin-left:37.5px;padding-bottom:var(--space-017)}
+.cn280{width:300px;height:272.062px;margin-bottom:var(--space-017);margin-right:0}
+.cn287{width:300px;height:192.828px}
+.cn290{margin-bottom:var(--space-017)}
+.cn296{width:300px;margin-right:37.5px;margin-left:37.5px;padding-top:var(--space-017);padding-bottom:var(--space-017)}
+.cn300{padding-top:50px}
+.cn301{width:300px;height:672.922px;display:block;top:0px;right:0px;bottom:0px;left:0px;margin-right:37.5px;margin-left:37.5px;padding-top:var(--space-017);padding-bottom:var(--space-017);margin-top:0;margin-bottom:0}
+.cn302{height:612.922px;top:0px;right:0px;bottom:0px;left:0px}
+.cn303{top:0px;right:0px;bottom:0px;left:0px}
+.cn304{top:0px;right:0px;bottom:0px;left:0px}
+.cn305{top:0px;right:0px;bottom:0px;left:0px}
+.cn306{top:0px;right:0px;bottom:0px;left:0px}
+.cn307{height:194px}
+.cn309{top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017)}
+.cn310{top:0px;right:0px;bottom:0px;left:0px}
+.cn312{top:0px;right:0px;bottom:0px;left:0px}
+.cn313{top:0px;right:0px;bottom:0px;left:0px}
+.cn313::after{top:0px;right:-18.1875px;bottom:4.1875px;left:175.438px;width:14px;height:23.7969px}
+.cn314{display:none}
+.cn326::after{top:auto;right:auto;bottom:auto;left:auto;width:auto;height:auto}
+.cn327{width:300px;height:729.297px;display:block;top:0px;right:0px;bottom:0px;left:0px;margin-right:37.5px;margin-left:37.5px;padding-top:var(--space-017);padding-bottom:var(--space-017);margin-top:0;margin-bottom:0}
+.cn328{height:669.297px;top:0px;right:0px;bottom:0px;left:0px}
+.cn329{top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017)}
+.cn330{top:0px;right:0px;bottom:0px;left:0px}
+.cn331{top:0px;right:0px;bottom:0px;left:0px}
+.cn332{top:0px;right:0px;bottom:0px;left:0px}
+.cn334{top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017)}
+.cn335{top:0px;right:0px;bottom:0px;left:0px}
+.cn336{height:358.312px}
+.cn338{top:0px;right:0px;bottom:0px;left:0px}
+.cn339{top:0px;right:0px;bottom:0px;left:0px}
+.cn339::after{top:0px;right:-18.1875px;bottom:4.1875px;left:90.7188px;width:14px;height:23.7969px}
+.cn340{display:none}
+.cn351::after{top:auto;right:auto;bottom:auto;left:auto;width:auto;height:auto}
+.cn355{width:300px;height:411.203px;margin-right:37.5px;margin-left:37.5px;padding-right:16px;padding-left:16px}
+.cn356{height:361.203px}
+.cn357{height:240px;margin-bottom:var(--space-017)}
+.cn363{padding-top:50px;padding-bottom:50px}
+.cn364{width:300px;margin-right:37.5px;margin-left:37.5px;padding-top:var(--space-017);padding-bottom:var(--space-017)}
+.cn365{height:399px}
+.cn366{line-height:24px}
+.cn368{height:154px}
+.cn371{height:48px}
+.cn379{height:51px;right:126px;left:150px;margin-top:-24px;margin-left:-24px;font-size:var(--font-size-012);line-height:var(--line-height-008)}
+.cn379::before{font-size:var(--font-size-012);line-height:var(--line-height-008)}
+.cn381{width:300px;margin-right:37.5px;margin-left:37.5px;padding-bottom:var(--space-017)}
+.cn387{width:300px;margin-right:37.5px;margin-left:37.5px;padding-top:var(--space-017)}
+.cn388{height:1855.92px}
+.cn390{height:auto}
+.cn390::after{}
+.cn392::before{content:"1 .column.size-1of1"}
+.cn393{width:300px;float:initial;margin-right:0}
+.cn394{margin-bottom:34.5px}
+.cn394::after{}
+.cn397{width:302px;height:189px}
+.cn398{padding-bottom:0}
+.cn405{display:block;margin-bottom:34.5px;padding-top:var(--space-012);padding-bottom:var(--space-012);overflow-wrap:break-word;background-color:var(--background)}
+.cn406{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-001);margin-right:var(--space-001);margin-bottom:var(--space-016);margin-left:var(--space-001);padding-top:var(--space-012);padding-right:var(--space-012);padding-bottom:var(--space-012);padding-left:var(--space-012)}
+.cn407{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);overflow-x:hidden;overflow-y:hidden;color:var(--primary);cursor:pointer}
+.cn408{width:302px;height:189px;display:inline;min-width:100%;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 400 / 250;vertical-align:bottom}
+.cn409{display:block;color:var(--border);font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn410{display:inline;font-family:var(--font-002);font-weight:var(--font-weight-004);cursor:pointer}
+.cn411{display:block;margin-bottom:var(--space-006);color:var(--muted-foreground);font-family:var(--font-001);font-size:var(--font-size-001);line-height:var(--line-height-010);text-align:left}
+.cn412{display:inline}
+.cn413{display:block;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn414{display:block}
+.cn415{display:block}
+.cn416{display:block;margin-bottom:var(--space-017);padding-top:var(--space-012);padding-bottom:var(--space-012);overflow-wrap:break-word;background-color:var(--background)}
+.cn417{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-001);margin-right:var(--space-001);margin-bottom:var(--space-016);margin-left:var(--space-001);padding-top:var(--space-012);padding-right:var(--space-012);padding-bottom:var(--space-012);padding-left:var(--space-012)}
+.cn418{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);overflow-x:hidden;overflow-y:hidden;color:var(--primary);cursor:pointer}
+.cn419{width:302px;height:189px;display:inline;min-width:100%;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 400 / 250;vertical-align:bottom}
+.cn420{display:block;color:var(--border);font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn421{display:inline;font-family:var(--font-002);font-weight:var(--font-weight-004);cursor:pointer}
+.cn422{display:block;margin-bottom:var(--space-006);color:var(--muted-foreground);font-family:var(--font-001);font-size:var(--font-size-001);line-height:var(--line-height-010);text-align:left}
+.cn423{display:inline}
+.cn424{display:block;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn425{display:block}
+.cn426{display:block}
+.cn427{display:none}
+.cn428{display:none}
+.cn428::after{display:none}
+.cn429{display:none}
+.cn430{display:none}
+.cn431{display:none}
+.cn432{display:none}
+.cn433{display:none}
+.cn434{display:none}
+.cn435{display:none}
+.cn436{display:none}
+.cn437{display:none}
+.cn438{display:none}
+.cn439{display:none}
+.cn440{display:none}
+.cn440::after{display:none}
+.cn441{display:none}
+.cn442{display:none}
+.cn443{display:none}
+.cn444{display:none}
+.cn445{display:none}
+.cn446{display:none}
+.cn447{display:none}
+.cn448{display:none}
+.cn449{display:none}
+.cn450{display:none}
+.cn451{width:300px;height:463.812px;margin-right:37.5px;margin-left:37.5px;padding-right:16px;padding-left:16px}
+.cn452{width:268px;height:424.812px;margin-bottom:var(--space-017);margin-right:0}
+.cn468{display:none}
+.cn472{width:300px;margin-right:37.5px;margin-left:37.5px}
+.cn473::after{}
+.cn505{width:300px;margin-right:37.5px;margin-left:37.5px}
+.cn505::after{}
+.cn519{height:47.5938px}
+}
+
+@media (min-width: 572px) and (max-width: 1024px) {
+.cn7{padding-top:174px}
+.cn9{width:614.391px;margin-right:76.8125px;margin-left:76.7969px}
+.cn9::after{}
+.cn33{width:614.391px;margin-right:76.8125px;margin-left:76.7969px}
+.cn42{height:1024px;padding-top:50px;padding-bottom:50px}
+.cn43{width:614.391px;margin-top:222px;margin-right:76.8125px;margin-left:76.7969px}
+.cn44{width:614.391px;height:415.391px;margin-bottom:var(--space-017);margin-right:0}
+.cn57{margin-top:20px}
+.cn58{width:614.391px}
+.cn62{padding-bottom:50px}
+.cn63{width:614.391px;margin-right:76.8125px;margin-left:76.7969px}
+.cn68{width:614.391px;margin-right:76.8125px;margin-left:76.7969px}
+.cn69{width:614.391px;height:118.016px;margin-bottom:var(--space-017);margin-right:0}
+.cn70{margin-right:582.391px}
+.cn76{height:67.2188px}
+.cn79{width:614.391px;height:140.422px;margin-bottom:var(--space-017);margin-right:0}
+.cn80{margin-right:582.391px}
+.cn88{width:614.391px;height:140.422px}
+.cn89{margin-right:582.391px}
+.cn97{padding-top:50px;padding-bottom:50px}
+.cn98{width:614.391px;height:426.188px;margin-right:76.8125px;margin-left:76.7969px}
+.cn99{height:324.188px}
+.cn100{height:62px}
+.cn104{margin-right:92.1719px;margin-bottom:var(--space-017);margin-left:92.1562px}
+.cn107{margin-right:104.453px;margin-bottom:var(--space-017);margin-left:104.453px}
+.cn109{height:118.984px}
+.cn114{padding-top:50px}
+.cn115{width:614.391px;margin-right:76.8125px;margin-left:76.7969px;padding-top:var(--space-017)}
+.cn124{padding-top:50px}
+.cn125{height:587.938px}
+.cn128{width:760.312px;height:180.578px;margin-bottom:var(--space-017);transform-origin:380.156px 90.2891px;margin-right:0}
+.cn131{height:23.7969px}
+.cn132{height:23.7969px}
+.cn133{height:23.7969px}
+.cn137{height:76.7812px}
+.cn138{height:76.7812px}
+.cn139{width:760.312px;height:285.172px;transform-origin:380.156px 142.586px}
+.cn146{height:102.375px;margin-bottom:var(--space-017)}
+.cn147{height:102.375px}
+.cn150{width:760.312px;height:524.344px;transform:matrix(1, 0, 0, 1, 760.312, 0);transform-origin:380.156px 262.172px}
+.cn151{width:760.312px;height:206.172px;margin-bottom:var(--space-017);transform:matrix(0.811851, 0, 0, 0.811851, 0, 0);transform-origin:380.156px 103.086px;margin-right:0}
+.cn160{height:102.375px}
+.cn161{height:102.375px}
+.cn162{width:760.312px;height:285.172px;transform:matrix(0.811851, 0, 0, 0.811851, 0, 0);transform-origin:380.156px 142.586px}
+.cn165{height:23.7969px}
+.cn171{margin-bottom:var(--space-017)}
+.cn176{width:760.312px;height:549.938px;transform:matrix(1, 0, 0, 1, 1520.62, 0);transform-origin:380.156px 274.969px}
+.cn177{width:760.312px;height:231.766px;margin-bottom:var(--space-017);transform:matrix(0.988149, 0, 0, 0.988149, 0, 0);transform-origin:380.156px 115.883px;margin-right:0}
+.cn185{width:760.312px;height:285.172px;transform:matrix(0.988149, 0, 0, 0.988149, 0, 0);transform-origin:380.156px 142.586px}
+.cn194{margin-bottom:var(--space-017)}
+.cn229{padding-bottom:50px}
+.cn230{width:614.391px;margin-right:76.8125px;margin-left:76.7969px}
+.cn237{width:614.391px;display:flex;margin-right:76.8125px;margin-left:76.7969px;flex-wrap:wrap}
+.cn238{width:182.25px;margin-right:33.7812px;margin-bottom:var(--space-017)}
+.cn244{width:182.25px;margin-right:33.7812px;margin-bottom:var(--space-017)}
+.cn250{width:182.25px;margin-bottom:var(--space-017);margin-right:0}
+.cn256{width:182.25px;margin-right:33.7812px}
+.cn262{width:182.25px;margin-right:33.7812px}
+.cn268{width:182.25px}
+.cn274{width:614.391px;margin-right:76.8125px;margin-left:76.7969px;padding-bottom:var(--space-017)}
+.cn275{height:35px}
+.cn276{margin-right:-35.6094px;margin-bottom:var(--space-017);margin-left:0}
+.cn279{width:614.391px;margin-right:76.8125px;margin-left:76.7969px;padding-bottom:var(--space-017)}
+.cn280{width:614.391px;height:160.031px;margin-bottom:var(--space-017);margin-right:0}
+.cn287{width:614.391px;height:148.016px}
+.cn290{margin-bottom:var(--space-017)}
+.cn296{width:614.391px;margin-right:76.8125px;margin-left:76.7969px;padding-top:var(--space-017);padding-bottom:var(--space-017)}
+.cn300{padding-top:50px}
+.cn314{padding-top:var(--space-017);padding-bottom:var(--space-017)}
+.cn315{width:384px}
+.cn318{width:384px;height:417.141px}
+.cn340{width:614.391px;padding-top:var(--space-017)}
+.cn341{width:307.188px;height:642.297px}
+.cn347{height:358.312px}
+.cn352{width:307.188px}
+.cn355{width:614.391px;height:319.203px;margin-right:76.8125px;margin-left:76.7969px}
+.cn356{height:269.203px}
+.cn357{height:148px;margin-bottom:var(--space-017)}
+.cn363{padding-top:50px;padding-bottom:50px}
+.cn364{width:614.391px;margin-right:76.8125px;margin-left:76.7969px;padding-top:var(--space-017);padding-bottom:var(--space-017)}
+.cn379{height:51px;right:283.203px;left:307.188px;margin-top:-24px;margin-left:-24px;font-size:var(--font-size-012);line-height:var(--line-height-008)}
+.cn379::before{font-size:var(--font-size-012);line-height:var(--line-height-008)}
+.cn381{width:614.391px;margin-right:76.8125px;margin-left:76.7969px;padding-bottom:var(--space-017)}
+.cn387{width:614.391px;margin-right:76.8125px;margin-left:76.7969px;padding-top:var(--space-017)}
+.cn388{height:1241.7px}
+.cn390{height:1241.7px}
+.cn390::after{}
+.cn392::before{content:"2 .column.size-1of2"}
+.cn393{width:290.297px;clear:both;margin-right:33.7812px}
+.cn394{margin-bottom:47.0469px}
+.cn394::after{}
+.cn397{width:292px;height:183px}
+.cn405::after{display:none}
+.cn416{display:block;margin-bottom:var(--space-017);padding-top:var(--space-012);padding-bottom:var(--space-012);overflow-wrap:break-word;background-color:var(--background)}
+.cn416::after{}
+.cn417{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-top:var(--space-001);margin-right:var(--space-001);margin-bottom:var(--space-016);margin-left:var(--space-001);padding-top:var(--space-012);padding-right:var(--space-012);padding-bottom:var(--space-012);padding-left:var(--space-012)}
+.cn418{display:block;position:relative;top:0px;right:0px;bottom:0px;left:0px;margin-bottom:var(--space-017);border-top-left-radius:var(--radius-003);border-top-right-radius:var(--radius-003);border-bottom-right-radius:var(--radius-003);border-bottom-left-radius:var(--radius-003);overflow-x:hidden;overflow-y:hidden;color:var(--primary);cursor:pointer}
+.cn419{width:292px;height:183px;display:inline;min-width:100%;max-width:100%;overflow-x:clip;overflow-y:clip;aspect-ratio:auto 400 / 250;vertical-align:bottom}
+.cn420{display:block;padding-bottom:var(--space-010);color:var(--border);font-size:var(--font-size-006);line-height:var(--line-height-004)}
+.cn421{display:inline;font-family:var(--font-002);font-weight:var(--font-weight-004);cursor:pointer}
+.cn422{display:block;margin-bottom:var(--space-006);color:var(--muted-foreground);font-family:var(--font-001);font-size:var(--font-size-001);line-height:var(--line-height-010);text-align:left}
+.cn423{display:inline}
+.cn424{display:block;font-family:var(--font-001);font-size:var(--font-size-005);line-height:var(--line-height-003)}
+.cn425{display:block}
+.cn426{display:block}
+.cn427{width:290.297px;margin-right:0}
+.cn428::after{}
+.cn431{width:292px;height:183px}
+.cn439{display:none}
+.cn440{display:none}
+.cn440::after{display:none}
+.cn441{display:none}
+.cn442{display:none}
+.cn443{display:none}
+.cn444{display:none}
+.cn445{display:none}
+.cn446{display:none}
+.cn447{display:none}
+.cn448{display:none}
+.cn449{display:none}
+.cn450{display:none}
+.cn451{width:614.391px;height:461.906px;margin-right:76.8125px;margin-left:76.7969px}
+.cn452{width:406.391px;margin-bottom:var(--space-017);margin-right:0}
+.cn468{width:406.391px}
+.cn472{width:614.391px;margin-right:76.8125px;margin-left:76.7969px}
+.cn473::after{}
+.cn505{width:614.391px;margin-right:76.8125px;margin-left:76.7969px}
+.cn505::after{}
+}
+
+@media (min-width: 1601px) {
+.cn9{width:1080px;margin-right:420px;margin-left:420px}
+.cn9::after{}
+.cn33{width:1080px;margin-right:420px;margin-left:420px}
+.cn42{height:1080px;padding-top:76.7969px;padding-bottom:76.7969px}
+.cn43{width:1080px;margin-top:250px;margin-right:420px;margin-left:420px}
+.cn44{width:510.297px;margin-right:59.3906px}
+.cn58{width:510.297px}
+.cn62{padding-bottom:76.7969px}
+.cn63{width:1080px;margin-right:420px;margin-left:420px}
+.cn68{width:1080px;margin-right:420px;margin-left:420px}
+.cn69{width:320.391px;height:185.234px;margin-right:59.3906px}
+.cn70{margin-right:288.391px}
+.cn76{height:134.438px}
+.cn79{width:320.391px;margin-right:59.3906px}
+.cn80{margin-right:288.391px}
+.cn88{width:320.391px}
+.cn89{margin-right:288.391px}
+.cn97{padding-top:76.7969px;padding-bottom:76.7969px}
+.cn98{width:1080px;height:351.969px;margin-right:420px;margin-left:420px}
+.cn99{height:249.969px}
+.cn104{margin-right:162px;margin-bottom:29.6875px;margin-left:162px}
+.cn107{margin-right:183.609px;margin-bottom:29.6875px;margin-left:183.594px}
+.cn114{padding-top:76.7969px}
+.cn115{width:1080px;margin-right:420px;margin-left:420px;padding-top:38.3906px}
+.cn124{padding-top:76.7969px}
+.cn126{width:1920px;transform:matrix(1, 0, 0, 1, -659.904, 0);transform-origin:960px 199.57px}
+.cn127{transform:none;transform-origin:initial}
+.cn131{height:23.7969px}
+.cn132{height:23.7969px}
+.cn133{height:23.7969px}
+.cn137{height:127.969px}
+.cn142{height:auto}
+.cn143{height:auto}
+.cn144{height:auto}
+.cn146{height:auto}
+.cn148{height:auto}
+.cn151{transform:none;opacity:initial;transform-origin:initial}
+.cn154{height:auto}
+.cn155{height:auto}
+.cn160{height:auto}
+.cn162{transform:none;opacity:initial;transform-origin:initial}
+.cn174{height:auto}
+.cn175{height:auto}
+.cn177{opacity:0.7;transform:matrix(0.8, 0, 0, 0.8, 0, 0);transform-origin:255.148px 154.273px}
+.cn185{opacity:0.7;transform:matrix(0.8, 0, 0, 0.8, 0, 0);transform-origin:255.148px 179.078px}
+.cn188{height:23.7969px}
+.cn189{height:23.7969px}
+.cn196{height:32px}
+.cn197{height:32px}
+.cn204{display:none}
+.cn206{width:10px;height:10px;display:inline-block;opacity:0.25;margin-right:var(--space-008);margin-left:var(--space-008);border-top-left-radius:var(--radius-005);border-top-right-radius:var(--radius-005);border-bottom-right-radius:var(--radius-005);border-bottom-left-radius:var(--radius-005);background-color:var(--border);cursor:pointer}
+.cn229{padding-bottom:76.7969px}
+.cn230{width:1080px;margin-right:420px;margin-left:420px}
+.cn237{width:1080px;margin-right:420px;margin-left:420px}
+.cn238{width:130.484px;margin-right:59.3906px}
+.cn244{width:130.484px;margin-right:59.3906px}
+.cn250{width:130.484px;margin-right:59.3906px}
+.cn256{width:130.484px;margin-right:59.3906px}
+.cn262{width:130.484px;margin-right:59.3906px}
+.cn268{width:130.484px}
+.cn274{width:1080px;margin-right:420px;margin-left:420px;padding-bottom:38.3906px}
+.cn275{height:34.6875px}
+.cn276{margin-bottom:29.6875px}
+.cn279{width:1080px;margin-right:420px;margin-left:420px;padding-bottom:38.3906px}
+.cn280{width:510.297px;margin-right:59.3906px}
+.cn287{width:510.297px;height:170.109px}
+.cn290{margin-bottom:29.6875px}
+.cn296{width:1080px;margin-right:420px;margin-left:420px;padding-top:38.3906px;padding-bottom:38.3906px}
+.cn300{padding-top:76.7969px}
+.cn314{padding-top:38.3906px;padding-bottom:38.3906px}
+.cn340{width:1080px;padding-top:38.3906px}
+.cn341{width:540px}
+.cn352{width:540px}
+.cn355{width:1080px;height:267.172px;margin-right:420px;margin-left:420px}
+.cn356{height:217.172px}
+.cn357{margin-bottom:23.9688px}
+.cn363{padding-top:76.7969px;padding-bottom:76.7969px}
+.cn364{width:1080px;margin-right:420px;margin-left:420px;padding-top:38.3906px;padding-bottom:38.3906px}
+.cn379{right:492px;left:540px}
+.cn381{width:1080px;margin-right:420px;margin-left:420px;padding-bottom:38.3906px}
+.cn387{width:1080px;margin-right:420px;margin-left:420px;padding-top:38.3906px}
+.cn388{height:655.438px}
+.cn390{height:655.438px}
+.cn390::after{}
+.cn393{width:320.391px;margin-right:59.3906px}
+.cn394::after{}
+.cn397{width:322px;height:201px}
+.cn405::after{display:none}
+.cn416::after{display:none}
+.cn427{width:320.391px;margin-right:59.3906px}
+.cn428::after{}
+.cn431{width:322px;height:201px}
+.cn439{width:320.391px}
+.cn440::after{}
+.cn443{width:322px;height:201px}
+.cn451{width:1080px;margin-right:420px;margin-left:420px}
+.cn452{width:412.016px;margin-right:47.9531px}
+.cn468{width:412.016px}
+.cn472{width:1080px;margin-right:420px;margin-left:420px}
+.cn473::after{}
+.cn505{width:1080px;margin-right:420px;margin-left:420px}
+.cn505::after{}
+}
+
+</style>
+</head>
+<body class="cn0">
+    <div class="cn1">
+      <div class="cn2"></div>
+      <div class="cn3">
+        <a class="cn4" aria-label="Cookie settings" href="#" role="button">
+          <svg class="cn5" viewBox="0 0 23.03 23.02" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M10.31.08a5.25,5.25,0,0,0-.25,1.11c-.1.57-.2,1.08-.22,1.14s-.1.11-.27.14a5.2,5.2,0,0,0-.68.17l-.46.14-.2-.22c-.1-.13-.44-.52-.74-.88A2.83,2.83,0,0,0,6.83,1a4.14,4.14,0,0,0-1,.5c-1,.58-1.06.62-1.06.76A10.66,10.66,0,0,0,5.13,3.4l.38,1L5,5l-.53.54-.17-.07c-.69-.27-1.92-.7-2-.7s-.19,0-.76,1.06a4.52,4.52,0,0,0-.5,1c0,.08.24.3.67.66l.87.75.22.19-.13.46a6,6,0,0,0-.18.69c0,.16-.06.24-.14.26s-.55.12-1.11.22a8.44,8.44,0,0,0-1.11.24C0,10.35,0,10.36,0,11.5s0,1.14.09,1.21A5.07,5.07,0,0,0,1.18,13l1.11.2c.08,0,.12.08.16.23s.1.42.18.68a4.33,4.33,0,0,1,.13.52,9.1,9.1,0,0,1-.87.76,4.94,4.94,0,0,0-.87.84,4.14,4.14,0,0,0,.5,1c.58,1,.61,1.06.76,1.06a11.47,11.47,0,0,0,1.13-.37l1-.38L5,18l.53.53-.06.17c-.27.69-.7,1.91-.7,2s0,.19,1.06.77a4.53,4.53,0,0,0,1,.5,3.75,3.75,0,0,0,.8-.84l.75-.88s.21,0,.51.1l.68.17c.17,0,.24.06.27.13s.13.57.22,1.14a6,6,0,0,0,.25,1.11c.07.08.19.09,1.21.09s1.15,0,1.22-.11A7.21,7.21,0,0,0,13,21.79c.1-.55.2-1.05.22-1.11s.1-.11.27-.13.46-.11.68-.18l.46-.13.2.22.74.87a2.83,2.83,0,0,0,.66.67,4.14,4.14,0,0,0,1-.5c1-.58,1.06-.62,1.06-.76s-.17-.57-.37-1.13l-.38-1,.53-.54.53-.54.17.07c.69.27,1.92.7,2,.7s.18-.05.76-1.06a4.14,4.14,0,0,0,.5-1,4.67,4.67,0,0,0-.88-.84,6.37,6.37,0,0,1-.85-.79s.08-.35.17-.71.19-.65.26-.68.54-.11,1.09-.21a7.21,7.21,0,0,0,1.12-.24c.11-.07.11-.08.11-1.22s0-1.15-.11-1.22a8.59,8.59,0,0,0-1.12-.24c-.55-.1-1-.19-1.09-.21s-.14-.2-.26-.68-.17-.67-.17-.71a8,8,0,0,1,.85-.79A1,1,0,0,0,22,6.58a1,1,0,0,0-.5-.76c-.58-1-.62-1.07-.76-1.07s-1.31.43-2,.7l-.17.07L18.05,5l-.53-.54.38-1c.14-.37.27-.75.38-1.13,0-.14-.06-.18-1.07-.76a4.14,4.14,0,0,0-1-.5,2.83,2.83,0,0,0-.66.67c-.3.36-.64.75-.74.88l-.2.22-.46-.14c-.25-.08-.56-.15-.68-.18s-.24-.06-.27-.13-.12-.56-.21-1.11A8.27,8.27,0,0,0,12.73.11C12.67,0,12.65,0,11.52,0S10.38,0,10.31.08Zm2,6.08a5.24,5.24,0,0,1,3,1.53,5.28,5.28,0,0,1,1.59,4.07,5.35,5.35,0,0,1-.39,1.76A5.41,5.41,0,0,1,6.34,9.93,5.64,5.64,0,0,1,7,8.48,7.41,7.41,0,0,1,8.5,7,5.44,5.44,0,0,1,12.36,6.16Z"></path></svg>
+          <span class="cn6" aria-hidden="true">
+            Cookie settings
+          </span>
+        </a>
+      </div>
+    </div>
+     
+    <div class="cn7" id="page-container">
+      <header class="cn8" id="main-header">
+        <div class="cn9">
+          <div class="cn10">
+            <span class="cn11"></span>
+             
+            <a class="cn12" href="https://managedsuppliers.com/">
+               
+              <img class="cn13" alt="managedsuppliers" height="43" id="logo" src="public/assets/cloned/images/da53e5914a57.png" width="93" />
+               
+            </a>
+             
+          </div>
+           
+          <div class="cn14" id="et-top-navigation">
+            <nav class="cn15" id="top-menu-nav">
+              <ul class="cn16" id="top-menu">
+                <li class="cn17">
+                  <a class="cn18" href="https://managedsuppliers.com/">
+                    Home
+                  </a>
+                </li>
+                <li class="cn19">
+                  <a class="cn20" aria-current="page" href="https://managedsuppliers.com/">
+                    Homepage
+                  </a>
+                </li>
+                <li class="cn21">
+                  <a class="cn22" href="https://managedsuppliers.com/terms-of-use">
+                    Terms of Use
+                  </a>
+                </li>
+                <li class="cn23">
+                  <a class="cn24" href="https://managedsuppliers.com/category/blog-post">
+                    Blog Post
+                  </a>
+                   
+                </li>
+                <li class="cn25">
+                  <a class="cn26" href="https://managedsuppliers.com/category/uncategorized">
+                    Uncategorized
+                  </a>
+                   
+                </li>
+              </ul>
+               
+            </nav>
+             
+            <div class="cn27" id="et_top_search">
+               
+            </div>
+             
+            <div class="cn28" id="et_mobile_nav_menu">
+              <div class="cn29">
+                <span class="cn30">
+                  Select Page
+                </span>
+                 
+                <span class="cn31"></span>
+                 
+              </div>
+               
+            </div>
+             
+          </div>
+           
+        </div>
+         
+        <div class="cn32">
+          <div class="cn33">
+            <form class="cn34" role="search">
+              <input class="cn35" data-ditto-id="style-input" name="s" placeholder="Search …" title="Search for:" type="search" value="" />
+               
+            </form>
+             
+          </div>
+           
+        </div>
+         
+      </header>
+       
+      <div class="cn36" id="et-main-area">
+        <div class="cn37" id="main-content">
+          <article class="cn38" id="post-2">
+            <div class="cn39">
+              <div class="cn40">
+                <div class="cn41">
+                  <div class="cn42" data-ditto-id="style-div">
+                    <div class="cn43">
+                      <div class="cn44">
+                        <div class="cn45">
+                          <div class="cn46">
+                            <h1 class="cn47">
+                              A 
+                              <span class="cn48">
+                                Smarter Way
+                              </span>
+                               To
+                              <br class="cn49" />
+                              Manage Suppliers
+                            </h1>
+                          </div>
+                           
+                        </div>
+                        <div class="cn50">
+                          <div class="cn51">
+                            <p class="cn52">
+                              Empower your vendor relationships with our cloud-based solution. From drafting SOWs to streamlined execution and comprehensive reporting, managedsuppliers has it all for you.
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn53">
+                          <div class="cn54">
+                            <div class="cn55">
+                              <a class="cn56">
+                                2-minute explainer video
+                              </a>
+                              <a class="cn57" href="https://managedsuppliers.com/?page_id=358072">
+                                Get in touch
+                              </a>
+                               
+                            </div>
+                             
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn58">
+                        <div class="cn59">
+                          <span class="cn60">
+                            <img class="cn61" alt="Managed Suppliers Hero Image Colleagues" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" title="Managed Suppliers Colleagues" />
+                          </span>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                  <div class="cn62">
+                    <div class="cn63">
+                      <div class="cn64">
+                        <div class="cn65">
+                          <div class="cn66">
+                            <h2 class="cn67">
+                              The Challenges
+                            </h2>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn68">
+                      <div class="cn69">
+                        <div class="cn70">
+                          <span class="cn71"></span>
+                           
+                        </div>
+                        <div class="cn72">
+                          <div class="cn73">
+                            <p class="cn74">
+                              Lots Of Suppliers
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn75">
+                          <div class="cn76">
+                            Although many companies are streamlining their procurement activities and concentrating on a
+                            <br class="cn77" />
+                             few key strategic partners to drive economies of scale, global companies still have dozens to
+                            <br class="cn78" />
+                             hundreds of suppliers in different locations worldwide.
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn79">
+                        <div class="cn80">
+                          <span class="cn81"></span>
+                           
+                        </div>
+                        <div class="cn82">
+                          <div class="cn83">
+                            <p class="cn84">
+                              Increasing Engagements And Complexity
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn85">
+                          <div class="cn86">
+                            <p class="cn87">
+                              Each engagement must be mutually agreed with the supplier by means of a contract or Statement of Work (SOW). Depending on requirements and service type, this results in numerous individual contracts with various attachments. The complexity of the documents varies by structure and granularity, often requiring unique tracking methods.
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn88">
+                        <div class="cn89">
+                          <span class="cn90"></span>
+                           
+                        </div>
+                        <div class="cn91">
+                          <div class="cn92">
+                            <p class="cn93">
+                              Lack Of Overview And Transparency
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn94">
+                          <div class="cn95">
+                            <p class="cn96">
+                              The individual engagements and therefore also the data are often spread across different regions, departments and, above all, people. The multitude of data, the use of different tools and the involvement of many parties make it very time-consuming to maintain an overview and transparency.
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                  <div class="cn97">
+                    <div class="cn98">
+                      <div class="cn99">
+                        <div class="cn100">
+                          <div class="cn101">
+                            <h2 class="cn102">
+                              <span class="cn103"></span>
+                              The solution to all your supplier management challenges
+                            </h2>
+                          </div>
+                           
+                        </div>
+                        <div class="cn104">
+                          <span class="cn105">
+                            <img class="cn106" alt="managedsuppliers groups mobile" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" title="managedsuppliers groups mobile" />
+                          </span>
+                           
+                        </div>
+                        <div class="cn107">
+                          <div class="cn108">
+                            <p class="cn109">
+                              managedsuppliers is a comprehensive solution that enables 
+                              <span class="cn110">
+                                <b class="cn111">
+                                  seamless digital collaboration with your suppliers throughout the relationship lifecycle
+                                </b>
+                              </span>
+                              . It connects all relevant stakeholders (internal and external) and facilitates contract creation, negotiation, execution, management, and evaluation.
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn112">
+                          <a class="cn113" href="https://managedsuppliers.com/?page_id=19">
+                            View benefits
+                          </a>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                  <div class="cn114">
+                    <div class="cn115">
+                      <div class="cn116">
+                        <div class="cn117">
+                          <div class="cn118">
+                            <h2 class="cn119">
+                              <span class="cn120"></span>
+                              <span class="cn121"></span>
+                              Single Source of Truth
+                            </h2>
+                             
+                            <p class="cn122">
+                              <strong class="cn123">
+                                for everything vendor related
+                              </strong>
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                  <div class="cn124">
+                    <div class="cn125">
+                      <div class="cn126">
+                        <div class="cn127" aria-hidden="true">
+                          <div class="cn128">
+                            <div class="cn129">
+                              <span class="cn130"></span>
+                               
+                            </div>
+                            <div class="cn131">
+                              <div class="cn132">
+                                <p class="cn133">
+                                  <span class="cn134"></span>
+                                  <span class="cn135"></span>
+                                  <strong class="cn136">
+                                    Before – Lost In Documentation
+                                  </strong>
+                                </p>
+                              </div>
+                               
+                            </div>
+                            <div class="cn137">
+                              <div class="cn138">
+                                Using multiple sources for your supplier-related documents and information complicates your processes for creating, updating and managing them. It may lead to errors, inconsistencies, data loss and miscommunication due to varying document versions and formats.
+                              </div>
+                               
+                            </div>
+                             
+                          </div>
+                          <div class="cn139">
+                            <div class="cn140">
+                              <span class="cn141"></span>
+                               
+                            </div>
+                            <div class="cn142">
+                              <div class="cn143">
+                                <p class="cn144">
+                                  <strong class="cn145">
+                                    After – Peace Of Mind
+                                  </strong>
+                                </p>
+                              </div>
+                               
+                            </div>
+                            <div class="cn146">
+                              <div class="cn147">
+                                Store and access all your supplier-related documents and information in one central place. This simplifies the creation, updating and management of documents. You avoid issues and errors, as every click and every change in the system is logged in a traceable manner and carried out in a central, standardized format.
+                              </div>
+                               
+                            </div>
+                            <div class="cn148">
+                              <a class="cn149" href="https://managedsuppliers.com/?page_id=358135">
+                                Learn more about Measurement
+                              </a>
+                               
+                            </div>
+                             
+                          </div>
+                           
+                        </div>
+                        <div class="cn150" aria-hidden="true">
+                          <div class="cn151">
+                            <div class="cn152">
+                              <span class="cn153"></span>
+                               
+                            </div>
+                            <div class="cn154">
+                              <div class="cn155">
+                                <p class="cn156">
+                                  <span class="cn157"></span>
+                                  <span class="cn158"></span>
+                                  <strong class="cn159">
+                                    Before – Decision Paralysis
+                                  </strong>
+                                </p>
+                              </div>
+                               
+                            </div>
+                            <div class="cn160">
+                              <div class="cn161">
+                                Comparing offers from various suppliers can be complex due to differences in style, structure, and wording. The challenge is to understand the content, manage any changes, and consider important agreements also for other proposals. Additionally, all information must be transparent and easily accessible.
+                              </div>
+                               
+                            </div>
+                             
+                          </div>
+                          <div class="cn162">
+                            <div class="cn163">
+                              <span class="cn164"></span>
+                               
+                            </div>
+                            <div class="cn165">
+                              <div class="cn166">
+                                <p class="cn167">
+                                  <span class="cn168"></span>
+                                  <span class="cn169"></span>
+                                  <strong class="cn170">
+                                    After – Objective, Data-Based Decisions
+                                  </strong>
+                                </p>
+                              </div>
+                               
+                            </div>
+                            <div class="cn171">
+                              <div class="cn172">
+                                <p class="cn173">
+                                  Our solution streamlines the complexity of supplier offers by providing structured, comparable data. With a centralized repository, you can easily track changes, compare versions, and make informed decisions. The clarity and consistency of information empower you to navigate the supplier landscape with confidence, ensuring optimal choices.
+                                </p>
+                              </div>
+                               
+                            </div>
+                            <div class="cn174">
+                              <a class="cn175" href="https://managedsuppliers.com/?page_id=358134">
+                                Learn more about Negotiation
+                              </a>
+                               
+                            </div>
+                             
+                          </div>
+                           
+                        </div>
+                        <div class="cn176">
+                          <div class="cn177">
+                            <div class="cn178">
+                              <span class="cn179"></span>
+                               
+                            </div>
+                            <div class="cn180">
+                              <div class="cn181">
+                                <p class="cn182">
+                                  Before – Awaiting Escalations
+                                </p>
+                              </div>
+                               
+                            </div>
+                            <div class="cn183">
+                              <div class="cn184">
+                                As supplier engagements are mostly scattered across different regions, departments and systems, it can be difficult to maintain an overview of all the durations, agreed terms &amp; conditions and delivery quality. The result is often that management realizes too late that the quality and performance may deviate from the agreement or that follow-up SOWs should be agreed in good time. This can lead to expensive additional costs or significant delays.
+                              </div>
+                               
+                            </div>
+                             
+                          </div>
+                          <div class="cn185">
+                            <div class="cn186">
+                              <span class="cn187"></span>
+                               
+                            </div>
+                            <div class="cn188">
+                              <div class="cn189">
+                                <p class="cn190">
+                                  <span class="cn191"></span>
+                                  <span class="cn192"></span>
+                                  <strong class="cn193">
+                                    After – Notified With Time To Spare
+                                  </strong>
+                                </p>
+                              </div>
+                               
+                            </div>
+                            <div class="cn194">
+                              <div class="cn195">
+                                With the assistance of managedsuppliers measurement and forecasting functions, management is informed at all times about suppliers with deviating performance, so that there is sufficient time to take appropriate countermeasures. In addition, all contracts and agreements, including their terms, are continuously monitored and extensions can be made in good time.
+                              </div>
+                               
+                            </div>
+                            <div class="cn196">
+                              <a class="cn197" href="https://managedsuppliers.com/?page_id=358137">
+                                Learn more about Reporting
+                              </a>
+                               
+                            </div>
+                             
+                          </div>
+                           
+                        </div>
+                      </div>
+                    </div>
+                    <button class="cn198" aria-label="Previous" type="button">
+                      <svg class="cn199" viewBox="0 0 100 100" fill="currentColor"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow"></path></svg>
+                    </button>
+                    <button class="cn200" aria-label="Next" type="button">
+                      <svg class="cn201" viewBox="0 0 100 100" fill="currentColor"><path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" class="arrow" transform="translate(100, 100) rotate(180) "></path></svg>
+                    </button>
+                    <ol class="cn202">
+                      <li class="cn203" aria-label="Page dot 1"></li>
+                      <li class="cn204" aria-label="Page dot 2"></li>
+                      <li class="cn205" aria-current="step" aria-label="Page dot 3"></li>
+                      <li class="cn206" aria-label="Page dot 3"></li>
+                    </ol>
+                  </div>
+                  <div class="cn207">
+                    <div class="cn208">
+                      <div class="cn209">
+                        <div class="cn210">
+                          <span class="cn211">
+                            <img class="cn212" alt="Don't be lost in documentation" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" title="Don't be lost in documentation" />
+                          </span>
+                           
+                        </div>
+                        <div class="cn213">
+                          <div class="cn214">
+                            <h2 class="cn215">
+                              Before
+                            </h2>
+                             
+                            <p class="cn216">
+                              Lost in documentation from multiple sources.
+                            </p>
+                             
+                            <p class="cn217">
+                              Decision paralysis comparing offers in various styles and formats.
+                            </p>
+                             
+                            <p class="cn218">
+                              Awaiting escalations due to low overview of agreed terms and conditions.
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn219">
+                        <div class="cn220">
+                          <span class="cn221">
+                            <img class="cn222" alt="Have a peace of mind" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" title="Have a peace of mind" />
+                          </span>
+                           
+                        </div>
+                        <div class="cn223">
+                          <div class="cn224">
+                            <h2 class="cn225">
+                              After
+                            </h2>
+                             
+                            <p class="cn226">
+                              Peace of mind with access to all supplier documents from one location.
+                            </p>
+                             
+                            <p class="cn227">
+                              Objective, data-based decision making based on comparable offers.
+                            </p>
+                             
+                            <p class="cn228">
+                              Proactive management of supplier performance, with time to spare.
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                  <div class="cn229">
+                    <div class="cn230">
+                      <div class="cn231">
+                        <div class="cn232">
+                          <div class="cn233">
+                            <h2 class="cn234">
+                              The 6 key ingredients
+                            </h2>
+                             
+                            <p class="cn235">
+                              <strong class="cn236">
+                                of managedsuppliers magic
+                              </strong>
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn237">
+                      <div class="cn238" id="btn_create">
+                        <div class="cn239">
+                          <span class="cn240"></span>
+                           
+                        </div>
+                        <div class="cn241">
+                          <div class="cn242">
+                            <p class="cn243">
+                              Creation
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn244" id="btn_negotiate">
+                        <div class="cn245">
+                          <span class="cn246"></span>
+                           
+                        </div>
+                        <div class="cn247">
+                          <div class="cn248">
+                            <p class="cn249">
+                              Negotiation
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn250" id="btn_measure">
+                        <div class="cn251">
+                          <span class="cn252"></span>
+                           
+                        </div>
+                        <div class="cn253">
+                          <div class="cn254">
+                            <p class="cn255">
+                              Measurement
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn256" id="btn_improve">
+                        <div class="cn257">
+                          <span class="cn258"></span>
+                           
+                        </div>
+                        <div class="cn259">
+                          <div class="cn260">
+                            <p class="cn261">
+                              Improvement
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn262" id="btn_forecast">
+                        <div class="cn263">
+                          <span class="cn264"></span>
+                           
+                        </div>
+                        <div class="cn265">
+                          <div class="cn266">
+                            <p class="cn267">
+                              Forecasting
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn268" id="btn_report">
+                        <div class="cn269">
+                          <span class="cn270"></span>
+                           
+                        </div>
+                        <div class="cn271">
+                          <div class="cn272">
+                            <p class="cn273">
+                              Reporting
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn274">
+                      <div class="cn275">
+                        <div class="cn276" id="screen_create">
+                          <span class="cn277">
+                            <div class="cn278"></div>
+                          </span>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn279" id="div_create">
+                      <div class="cn280">
+                        <div class="cn281">
+                          <span class="cn282"></span>
+                           
+                        </div>
+                        <div class="cn283">
+                          <div class="cn284">
+                            <h3 class="cn285">
+                              Challenge Of SOW Creation
+                            </h3>
+                             
+                            <p class="cn286">
+                              Vendor and contract management involves managing numerous pieces of information, including various document types and versions. This often results in extensive email exchanges and poorly documented meetings, causing issues with transparency and traceability in change tracking. Without a clear and standardised SOW, companies have difficulty maintaining clarity on who needs to do what to achieve the defined goal.
+                            </p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn287">
+                        <div class="cn288">
+                          <span class="cn289"></span>
+                           
+                        </div>
+                        <div class="cn290">
+                          <div class="cn291">
+                            <h3 class="cn292">
+                              Solution
+                            </h3>
+                             
+                            <p class="cn293">
+                              Implement managedsuppliers! managedsuppliers is a central collaboration solution that provides an online SOW framework, enhancing collaboration, productivity, and accuracy.
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn294">
+                          <a class="cn295" href="https://managedsuppliers.com/?page_id=358047">
+                            Learn more about Creation
+                          </a>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn296">
+                      <div class="cn297">
+                        <div class="cn298">
+                          <div class="cn299"></div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                  <div class="cn300">
+                    <div class="cn301">
+                      <div class="cn302">
+                        <div class="cn303">
+                          <span class="cn304"></span>
+                           
+                        </div>
+                        <div class="cn305">
+                          <div class="cn306">
+                            <h3 class="cn307">
+                              Real-Time Reporting,
+                              <br class="cn308" />
+                              At Your Fingertips
+                            </h3>
+                          </div>
+                           
+                        </div>
+                        <div class="cn309">
+                          <div class="cn310">
+                            <p class="cn311">
+                              managedsupplier’s customizable supplier reporting, available immediately, helps companies make better choices and improve supplier collaboration. It provides a comprehensive history for easy comparison of supplier performance, even on data previously invisible to the company (number of change requests, holistic reporting, and others).
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn312">
+                          <a class="cn313" href="https://managedsuppliers.com/?page_id=358137">
+                            Learn more about Reporting
+                          </a>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn314">
+                      <div class="cn315">
+                        <div class="cn316">
+                          <span class="cn317"></span>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn318">
+                        <div class="cn319">
+                          <div class="cn320">
+                            <h3 class="cn321">
+                              Real-Time Reporting,
+                              <br class="cn322" />
+                              At Your Fingertips
+                            </h3>
+                          </div>
+                           
+                        </div>
+                        <div class="cn323">
+                          <div class="cn324">
+                            managedsupplier’s customizable supplier reporting, available immediately, helps companies make better choices and improve supplier collaboration. It provides a comprehensive history for easy comparison of supplier performance, even on data previously invisible to the company (number of change requests, holistic reporting, and others).
+                          </div>
+                           
+                        </div>
+                        <div class="cn325">
+                          <a class="cn326" href="https://managedsuppliers.com/?page_id=358137">
+                            Learn more about Reporting
+                          </a>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn327">
+                      <div class="cn328">
+                        <div class="cn329">
+                          <span class="cn330"></span>
+                           
+                        </div>
+                        <div class="cn331">
+                          <div class="cn332">
+                            <h3 class="cn333">
+                              Based On Decades Of Experience
+                            </h3>
+                          </div>
+                           
+                        </div>
+                        <div class="cn334">
+                          <div class="cn335">
+                            <p class="cn336">
+                              Modern corporations have long focused on outsourcing activities and buying in expertise and support. This has multiplied the number of suppliers as well as the number of individual engagements per company in recent years. Due to their greater dependency and larger order volumes, most of them have understood that managing the suppliers in their value chain is of enormous importance. Our parent company 
+                              <a class="cn337" href="https://www.aventario.com/">
+                                Aventario
+                              </a>
+                              , consults companies on solving these issues for the past two decades. managedsuppliers builds on that experience.
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn338">
+                          <a class="cn339" href="https://managedsuppliers.com/?page_id=366">
+                            Meet the team
+                          </a>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn340">
+                      <div class="cn341">
+                        <div class="cn342">
+                          <div class="cn343">
+                            <h3 class="cn344">
+                              Based On Decades Of Experience
+                            </h3>
+                          </div>
+                           
+                        </div>
+                        <div class="cn345">
+                          <div class="cn346">
+                            <p class="cn347">
+                              Modern corporations have long focused on outsourcing activities and buying in expertise and support. This has multiplied the number of suppliers as well as the number of individual engagements per company in recent years. Due to their greater dependency and larger order volumes, most of them have understood that managing the suppliers in their value chain is of enormous importance. Our parent company 
+                              <a class="cn348" href="https://www.aventario.com/">
+                                <span class="cn349">
+                                  Aventario
+                                </span>
+                              </a>
+                              , consults companies on solving these issues for the past two decades. managedsuppliers builds on that experience.
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn350">
+                          <a class="cn351" href="https://managedsuppliers.com/?page_id=366">
+                            Meet the team
+                          </a>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn352">
+                        <div class="cn353">
+                          <span class="cn354"></span>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn355">
+                      <div class="cn356">
+                        <div class="cn357">
+                          <div class="cn358">
+                            <h2 class="cn359">
+                              Take your supplier relationships
+                              <br class="cn360" />
+                              to the next level.
+                            </h2>
+                          </div>
+                           
+                        </div>
+                        <div class="cn361">
+                          <a class="cn362" href="https://managedsuppliers.com/?page_id=358205">
+                            Book a demo
+                          </a>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                  <div class="cn363">
+                    <div class="cn364">
+                      <div class="cn365">
+                        <div class="cn366">
+                          <div class="cn367">
+                            <h2 class="cn368">
+                              <span class="cn369"></span>
+                              <span class="cn370"></span>
+                              From Problem to Solution
+                            </h2>
+                             
+                            <p class="cn371">
+                              <strong class="cn372">
+                                The Story behind managedsuppliers
+                              </strong>
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn373">
+                          <div class="cn374">
+                            <video class="cn375" controls>
+                               
+                              <source class="cn376" src="public/assets/cloned/videos/f75ba35e9ed1.mov" type="video/mp4" />
+                               
+                            </video>
+                          </div>
+                           
+                          <div class="cn377">
+                            <div class="cn378">
+                              <a class="cn379" href="#"></a>
+                            </div>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                  <div class="cn380">
+                    <div class="cn381">
+                      <div class="cn382">
+                        <div class="cn383">
+                          <div class="cn384">
+                            <h2 class="cn385">
+                              Blog
+                            </h2>
+                             
+                            <p class="cn386"></p>
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn387">
+                      <div class="cn388">
+                        <div class="cn389">
+                          <div class="cn390">
+                            <div class="cn391">
+                              <div class="cn392">
+                                <div class="cn393">
+                                  <article class="cn394" id="post-358984">
+                                    <div class="cn395">
+                                      <a class="cn396" href="https://managedsuppliers.com/how-transparency-can-make-or-break-supplier-relationships">
+                                        <img class="cn397" alt="How Transparency Can Make or Break Supplier Relationships" height="250" sizes="(max-width:479px) 479px, 100vw " src="public/assets/cloned/images/ac09c38b7024.jpg" srcset="public/assets/cloned/images/fbcae8e0ea58.jpg 479w, public/assets/cloned/images/ac09c38b7024.jpg 480w" width="400" />
+                                      </a>
+                                    </div>
+                                     
+                                    <h2 class="cn398">
+                                      <a class="cn399" href="https://managedsuppliers.com/how-transparency-can-make-or-break-supplier-relationships">
+                                        How Transparency Can Make or Break Supplier Relationships
+                                      </a>
+                                       
+                                    </h2>
+                                     
+                                    <p class="cn400">
+                                      <span class="cn401">
+                                        Jan 15, 2025
+                                      </span>
+                                    </p>
+                                    <div class="cn402">
+                                      <div class="cn403">
+                                        <p class="cn404">
+                                          You and your team manage dozens or even hundreds of supplier contracts across different regions. A major project deadline is approaching, and everything seems on track - until you get an urgent message. One of your key suppliers missed a critical milestone. Panic sets...
+                                        </p>
+                                         
+                                      </div>
+                                    </div>
+                                     
+                                  </article>
+                                  <article class="cn405" id="post-358971">
+                                    <div class="cn406">
+                                      <a class="cn407" href="https://managedsuppliers.com/feature-presentation-6-reporting-how-to-create-unified-vendor-reports-within-managedsuppliers">
+                                        <img class="cn408" alt="Feature Presentation #6 Reporting: How to create unified Vendor Reports within managedsuppliers" height="250" sizes="(max-width:479px) 479px, 100vw " src="public/assets/cloned/images/b94f79b18135.jpg" srcset="public/assets/cloned/images/f19bd16c435f.jpg 479w, public/assets/cloned/images/b94f79b18135.jpg 480w" width="400" />
+                                      </a>
+                                    </div>
+                                     
+                                    <h2 class="cn409">
+                                      <a class="cn410" href="https://managedsuppliers.com/feature-presentation-6-reporting-how-to-create-unified-vendor-reports-within-managedsuppliers">
+                                        Feature Presentation #6 Reporting: How to create unified Vendor Reports within managedsuppliers
+                                      </a>
+                                       
+                                    </h2>
+                                     
+                                    <p class="cn411">
+                                      <span class="cn412">
+                                        Dec 16, 2024
+                                      </span>
+                                    </p>
+                                    <div class="cn413">
+                                      <div class="cn414">
+                                        <p class="cn415">
+                                          Maximize Supplier Management Insights with managedsuppliers’ Reporting Feature In complex supplier networks, having access to detailed and reliable data is crucial for maintaining strong vendor relationships and driving strategic decisions. The Reporting feature of...
+                                        </p>
+                                         
+                                      </div>
+                                    </div>
+                                     
+                                  </article>
+                                  <article class="cn416" id="post-358965">
+                                    <div class="cn417">
+                                      <a class="cn418" href="https://managedsuppliers.com/feature-presentation-5-forecasting-predict-the-future-with-managedsuppliers">
+                                        <img class="cn419" alt="Feature Presentation #5 Forecasting: Predict the Future with managedsuppliers" height="250" sizes="(max-width:479px) 479px, 100vw " src="public/assets/cloned/images/53ecd87d44ca.jpg" srcset="public/assets/cloned/images/c4611ace2c68.jpg 479w, public/assets/cloned/images/53ecd87d44ca.jpg 480w" width="400" />
+                                      </a>
+                                    </div>
+                                     
+                                    <h2 class="cn420">
+                                      <a class="cn421" href="https://managedsuppliers.com/feature-presentation-5-forecasting-predict-the-future-with-managedsuppliers">
+                                        Feature Presentation #5 Forecasting: Predict the Future with managedsuppliers
+                                      </a>
+                                       
+                                    </h2>
+                                     
+                                    <p class="cn422">
+                                      <span class="cn423">
+                                        Dec 16, 2024
+                                      </span>
+                                    </p>
+                                    <div class="cn424">
+                                      <div class="cn425">
+                                        <p class="cn426">
+                                          How managedsuppliers’ Forecast Feature Empowers Data-Driven Supplier Management Effective supplier management goes beyond tracking current performance - it’s about predicting future trends, optimizing budgets, and ensuring that your company is prepared for any changes...
+                                        </p>
+                                         
+                                      </div>
+                                    </div>
+                                     
+                                  </article>
+                                </div>
+                                <div class="cn427">
+                                  <article class="cn428" id="post-358971">
+                                    <div class="cn429">
+                                      <a class="cn430" href="https://managedsuppliers.com/feature-presentation-6-reporting-how-to-create-unified-vendor-reports-within-managedsuppliers">
+                                        <img class="cn431" alt="Feature Presentation #6 Reporting: How to create unified Vendor Reports within managedsuppliers" height="250" sizes="(max-width:479px) 479px, 100vw " src="public/assets/cloned/images/b94f79b18135.jpg" srcset="public/assets/cloned/images/f19bd16c435f.jpg 479w, public/assets/cloned/images/b94f79b18135.jpg 480w" width="400" />
+                                      </a>
+                                    </div>
+                                     
+                                    <h2 class="cn432">
+                                      <a class="cn433" href="https://managedsuppliers.com/feature-presentation-6-reporting-how-to-create-unified-vendor-reports-within-managedsuppliers">
+                                        Feature Presentation #6 Reporting: How to create unified Vendor Reports within managedsuppliers
+                                      </a>
+                                       
+                                    </h2>
+                                     
+                                    <p class="cn434">
+                                      <span class="cn435">
+                                        Dec 16, 2024
+                                      </span>
+                                    </p>
+                                    <div class="cn436">
+                                      <div class="cn437">
+                                        <p class="cn438">
+                                          Maximize Supplier Management Insights with managedsuppliers’ Reporting Feature In complex supplier networks, having access to detailed and reliable data is crucial for maintaining strong vendor relationships and driving strategic decisions. The Reporting feature of...
+                                        </p>
+                                         
+                                      </div>
+                                    </div>
+                                     
+                                  </article>
+                                </div>
+                                <div class="cn439">
+                                  <article class="cn440" id="post-358965">
+                                    <div class="cn441">
+                                      <a class="cn442" href="https://managedsuppliers.com/feature-presentation-5-forecasting-predict-the-future-with-managedsuppliers">
+                                        <img class="cn443" alt="Feature Presentation #5 Forecasting: Predict the Future with managedsuppliers" height="250" sizes="(max-width:479px) 479px, 100vw " src="public/assets/cloned/images/53ecd87d44ca.jpg" srcset="public/assets/cloned/images/c4611ace2c68.jpg 479w, public/assets/cloned/images/53ecd87d44ca.jpg 480w" width="400" />
+                                      </a>
+                                    </div>
+                                     
+                                    <h2 class="cn444">
+                                      <a class="cn445" href="https://managedsuppliers.com/feature-presentation-5-forecasting-predict-the-future-with-managedsuppliers">
+                                        Feature Presentation #5 Forecasting: Predict the Future with managedsuppliers
+                                      </a>
+                                       
+                                    </h2>
+                                     
+                                    <p class="cn446">
+                                      <span class="cn447">
+                                        Dec 16, 2024
+                                      </span>
+                                    </p>
+                                    <div class="cn448">
+                                      <div class="cn449">
+                                        <p class="cn450">
+                                          How managedsuppliers’ Forecast Feature Empowers Data-Driven Supplier Management Effective supplier management goes beyond tracking current performance - it’s about predicting future trends, optimizing budgets, and ensuring that your company is prepared for any changes...
+                                        </p>
+                                         
+                                      </div>
+                                    </div>
+                                     
+                                  </article>
+                                </div>
+                              </div>
+                               
+                            </div>
+                             
+                          </div>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                    <div class="cn451">
+                      <div class="cn452">
+                        <div class="cn453">
+                          <div class="cn454">
+                            <h2 class="cn455">
+                              <span class="cn456"></span>
+                              <span class="cn457"></span>
+                              <span class="cn458"></span>
+                              <span class="cn459">
+                                How advanced is your
+                                <br class="cn460" />
+                                supplier management?
+                              </span>
+                            </h2>
+                             
+                            <p class="cn461"></p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn462">
+                          <div class="cn463">
+                            <p class="cn464">
+                              Take a test and find out
+                              <span class="cn465"></span>
+                            </p>
+                          </div>
+                           
+                        </div>
+                        <div class="cn466">
+                          <a class="cn467" href="https://aventario.com/vm-maturity-assessment">
+                            Take anonymous test
+                          </a>
+                           
+                        </div>
+                         
+                      </div>
+                      <div class="cn468">
+                        <div class="cn469">
+                          <span class="cn470"></span>
+                           
+                        </div>
+                         
+                      </div>
+                       
+                    </div>
+                     
+                  </div>
+                   
+                </div>
+                 
+              </div>
+               
+            </div>
+             
+          </article>
+           
+        </div>
+         
+        <footer class="cn471" id="main-footer">
+          <div class="cn472">
+            <div class="cn473" id="footer-widgets">
+              <div class="cn474">
+                <div class="cn475" id="block-5">
+                  <div class="cn476">
+                    <h2 class="cn477">
+                      Archives
+                    </h2>
+                    <ul class="cn478">
+                      <li class="cn479">
+                        <a class="cn480" href="https://managedsuppliers.com/2025/01">
+                          January 2025
+                        </a>
+                      </li>
+                      <li class="cn481">
+                        <a class="cn482" href="https://managedsuppliers.com/2024/12">
+                          December 2024
+                        </a>
+                      </li>
+                      <li class="cn483">
+                        <a class="cn484" href="https://managedsuppliers.com/2024/11">
+                          November 2024
+                        </a>
+                      </li>
+                      <li class="cn485">
+                        <a class="cn486" href="https://managedsuppliers.com/2024/10">
+                          October 2024
+                        </a>
+                      </li>
+                      <li class="cn487">
+                        <a class="cn488" href="https://managedsuppliers.com/2024/08">
+                          August 2024
+                        </a>
+                      </li>
+                      <li class="cn489">
+                        <a class="cn490" href="https://managedsuppliers.com/2024/07">
+                          July 2024
+                        </a>
+                      </li>
+                      <li class="cn491">
+                        <a class="cn492" href="https://managedsuppliers.com/2024/06">
+                          June 2024
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="cn493" id="block-6">
+                  <div class="cn494">
+                    <h2 class="cn495">
+                      Categories
+                    </h2>
+                    <ul class="cn496">
+                      <li class="cn497">
+                        <a class="cn498" href="https://managedsuppliers.com/category/blog-post">
+                          Blog Post
+                        </a>
+                         
+                      </li>
+                      <li class="cn499">
+                        <a class="cn500" href="https://managedsuppliers.com/category/uncategorized">
+                          Uncategorized
+                        </a>
+                         
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="cn501"></div>
+              <div class="cn502"></div>
+              <div class="cn503"></div>
+               
+            </div>
+             
+          </div>
+           
+          <div class="cn504" id="footer-bottom">
+            <div class="cn505">
+              <ul class="cn506">
+                <li class="cn507">
+                  <a class="cn508" href="#">
+                     
+                    <span class="cn509">
+                      Facebook
+                    </span>
+                     
+                  </a>
+                   
+                </li>
+                <li class="cn510">
+                  <a class="cn511" href="#">
+                     
+                    <span class="cn512">
+                      X
+                    </span>
+                     
+                  </a>
+                   
+                </li>
+                <li class="cn513">
+                  <a class="cn514" href="#">
+                     
+                    <span class="cn515">
+                      Instagram
+                    </span>
+                     
+                  </a>
+                   
+                </li>
+                <li class="cn516">
+                  <a class="cn517" href="https://managedsuppliers.com/feed">
+                     
+                    <span class="cn518">
+                      RSS
+                    </span>
+                     
+                  </a>
+                   
+                </li>
+              </ul>
+              <p class="cn519" id="footer-info">
+                Designed by 
+                <a class="cn520" href="https://www.elegantthemes.com/" title="Premium WordPress Themes">
+                  Elegant Themes
+                </a>
+                 | Powered by 
+                <a class="cn521" href="https://www.wordpress.org/">
+                  WordPress
+                </a>
+              </p>
+               
+            </div>
+             
+          </div>
+           
+        </footer>
+         
+      </div>
+       
+    </div>
+     
+    <div class="cn522" id="hs-web-interactives-top-anchor"></div>
+     
+    <div class="cn523" id="hs-web-interactives-floating-container">
+       
+    </div>
+     
+</body>
+</html>

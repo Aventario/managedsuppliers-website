@@ -1,0 +1,2 @@
+[data-ditto-id="style-input"]::placeholder{color:rgb(117, 117, 117)}
+[data-ditto-id="style-div"]::after{content:url("https://www.zazitatry.sk/test/hero_bg.svg");display:none;position:absolute;top:50%;right:0px;z-index:-99;color:rgb(102, 102, 102);font-size:14px;font-weight:500;line-height:23.8px;background-repeat:no-repeat}

@@ -1,0 +1,7 @@
+export const dynamic = "force-static";
+
+export function GET() {
+  return new Response("# A better way to manage suppliers - managedsuppliers\n\nEmpower your vendor relationships with our cloud-based solution. From drafting SOWs to streamlined execution and comprehensive reporting\n\nThis is a generated ditto.site clone. It preserves captured page content, metadata, route structure, and static assets where available.\n\n## Routes\n\n- [A better way to manage suppliers - managedsuppliers](https://managedsuppliers.com/) - Empower your vendor relationships with our cloud-based solution. From drafting SOWs to streamlined execution and comprehensive reporting\n\n## Captured Content\n\n### A better way to manage suppliers - managedsuppliers\nCookie settings Home Homepage Terms of Use Blog Post Uncategorized Select Page A Smarter Way To Manage Suppliers Empower your vendor relationships with our cloud-based solution. From drafting SOWs to streamlined execution and comprehensive reporting, managedsuppliers has it all for you. 2-minute explainer video Get in touch The Challenges Lots Of Suppliers Although many companies are streamlining their procurement activities and concentrating on a few key strategic partners to drive economies of scale, global companies still have dozens to hundreds of suppliers in different locations worldwide. Increasing Engagements And Complexity Each engagement must be mutually agreed with the supplier by\n", {
+    headers: { "content-type": "text/plain; charset=utf-8" },
+  });
+}
