@@ -7,7 +7,7 @@ const COLS = [
     title: "Address",
     // NOTE: confirm exact postal address with Julian — read from Figma as
     // Authoritative Aventario legal entity (matches the Impressum).
-    lines: ["Aventario Services GmbH", "Tuchlauben 7a", "1010 Vienna, Austria"],
+    lines: ["Aventario Solutions GmbH", "Tuchlauben 7a", "1010 Vienna, Austria"],
   },
   { title: "Product", links: [["Features", "/features"], ["Benefits", "/features#benefits"], ["FAQ", "/faq"]] },
   { title: "Company", links: [["About", "/about"], ["Blog", "/blog"], ["Contact", "/contact"]] },
@@ -39,7 +39,7 @@ export default function FigFooter() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-white/50 md:flex-row md:items-center md:justify-between">
-          <span>© {""}Aventario Services GmbH. All rights reserved.</span>
+          <span>© {""}Aventario Solutions GmbH. All rights reserved.</span>
           <nav className="flex flex-wrap gap-6">
             <a href="/terms" className="text-white/60 no-underline hover:text-white">Terms and Conditions</a>
             <a href="/privacy" className="text-white/60 no-underline hover:text-white">Privacy Policy</a>

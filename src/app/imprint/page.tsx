@@ -10,12 +10,12 @@ export default function ImprintPage() {
         <p>
           Information pursuant to §5 E-Commerce Act (ECG), §14 Austrian Commercial Code (UGB) and
           §63 Trade Regulation Act (GewO), and disclosure pursuant to §25 Media Act (MedienG).
-          managedsuppliers is a software product operated by Aventario Services GmbH.
+          managedsuppliers is a software product operated by Aventario Solutions GmbH.
         </p>
 
         <H2>Company</H2>
         <p>
-          Aventario Services GmbH<br />
+          Aventario Solutions GmbH<br />
           Tuchlauben 7a<br />
           1010 Vienna<br />
           Austria
@@ -35,9 +35,9 @@ export default function ImprintPage() {
         <p>
           Legal form: Gesellschaft mit beschränkter Haftung (GmbH)<br />
           Registered office: Vienna, Austria<br />
-          Commercial register number (Firmenbuchnummer): [FIRMENBUCHNUMMER — CONFIRM]<br />
+          Commercial register number (Firmenbuchnummer): FN 594042t<br />
           Commercial register court (Firmenbuchgericht): Commercial Court of Vienna (Handelsgericht Wien)<br />
-          VAT identification number (UID): ATU 75913004
+          VAT identification number (UID): [UID/ATU — CONFIRM VIA FIRMENBUCH EXTRACT]
         </p>
 
         <H2>Trade and supervisory authority</H2>
@@ -80,7 +80,7 @@ export default function ImprintPage() {
         <p>
           The content and works on these pages are subject to Austrian copyright law. Reproduction,
           editing, distribution and any form of exploitation beyond the limits of copyright law require
-          the prior written consent of Aventario Services GmbH.
+          the prior written consent of Aventario Solutions GmbH.
         </p>
       </Reveal>
     </LegalPage>

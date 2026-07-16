@@ -8,8 +8,8 @@
  * container, so gtmId is the main one to set.
  */
 export const ANALYTICS = {
-  /** Google Tag Manager container, e.g. "GTM-XXXXXXX". Loads GA4 + Ads. */
-  gtmId: "",
+  /** Google Tag Manager container. Loads GA4 + Ads (configured inside GTM). */
+  gtmId: "GTM-KSG7LXBM",
   /** Optional: GA4 measurement ID if you also want it loaded directly, e.g. "G-XXXXXXXXXX". Normally leave empty and configure GA4 inside GTM. */
   ga4Id: "",
   /** Optional: Google Ads ID, e.g. "AW-XXXXXXXXX". Normally configure inside GTM. */

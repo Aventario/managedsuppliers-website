@@ -9,10 +9,10 @@ export default function TermsPage() {
       <Reveal variant="fade" className="space-y-6">
         <p>
           These terms of use govern your access to and use of the managedsuppliers website at
-          www.managedsuppliers.com, operated by Aventario Services GmbH, Tuchlauben 7a, 1010 Vienna,
+          www.managedsuppliers.com, operated by Aventario Solutions GmbH, Tuchlauben 7a, 1010 Vienna,
           Austria (&quot;we&quot;, &quot;us&quot;). They apply to the website only. Use of the
           managedsuppliers software product is governed by a separate written service agreement between
-          your organization and Aventario Services GmbH, which prevails over these terms in the event of
+          your organization and Aventario Solutions GmbH, which prevails over these terms in the event of
           any conflict.
         </p>
 
@@ -27,7 +27,7 @@ export default function TermsPage() {
         <p>
           All content on this website, including text, graphics, logos, illustrations, the
           managedsuppliers name and brand, and the software behind the site, is owned by or licensed to
-          Aventario Services GmbH and is protected by Austrian and international copyright and trademark
+          Aventario Solutions GmbH and is protected by Austrian and international copyright and trademark
           law. You may view and print pages for your own information. Any other reproduction, editing,
           distribution or exploitation requires our prior written consent.
         </p>
