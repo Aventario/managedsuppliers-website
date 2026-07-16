@@ -11,9 +11,6 @@ export function LegalPage({ title, updated, children }: { title: string; updated
           <div className="space-y-6 text-[0.98rem] leading-relaxed text-foreground [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-bold [&_a]:text-accent">
             {children}
           </div>
-          <p className="mt-10 rounded-lg bg-[#eef7f4] p-4 text-sm text-foreground">
-            This is placeholder legal text for the site build. Final wording should be reviewed and confirmed before launch.
-          </p>
         </Container>
       </section>
     </PageShell>

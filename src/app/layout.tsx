@@ -2,6 +2,8 @@ import "./globals.css";
 import "./ditto.css";
 import type { ReactNode } from "react";
 import { SITE_ORIGIN } from "../lib/site";
+import CookieConsent from "./components/consent";
+import { ANALYTICS } from "./lib/analytics-config";
 
 export const metadata = {
   "metadataBase": new URL(SITE_ORIGIN || "http://localhost:3000"),
@@ -24,9 +26,12 @@ export const metadata = {
     "siteName": "managedsuppliers",
     "url": "/",
     "images": [
-      "https://managedsuppliers.com/wp-content/uploads/2024/07/Snimka-obrazovky-2024-07-08-o-14.33.49.png"
+      "https://managedsuppliers.com/assets/video/explainer-poster.jpg"
     ]
   },
+  ...(ANALYTICS.searchConsoleVerification
+    ? { verification: { google: ANALYTICS.searchConsoleVerification } }
+    : {}),
   "twitter": {
     "card": "summary_large_image",
     "title": "A better way to manage suppliers - managedsuppliers",
@@ -43,6 +48,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={"en-US"}>
       <head>
+        {/* Google Consent Mode v2 — default DENIED before anything loads (GDPR/DSGVO) */}
+        <script
+          key="consent-default"
+          dangerouslySetInnerHTML={{
+            __html:
+              "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});",
+          }}
+        />
         <script
           key="ditto-json-ld-0"
           type="application/ld+json"
@@ -51,6 +64,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="block text-foreground [font-family:'Open_Sans',_Arial,_sans-serif] text-sm font-medium not-italic leading-[1.5rem] tracking-[normal] [word-spacing:0px] text-start normal-case whitespace-normal [word-break:normal] [overflow-wrap:normal] indent-0 [text-shadow:none] [font-variant-caps:normal] [font-feature-settings:normal] list-outside [writing-mode:horizontal-tb] [direction:ltr] bg-background bg-cover [background-position:50%_0%] bg-no-repeat [background-attachment:fixed]">
         {children}
+        <CookieConsent />
       </body>
     </html>
   );
