@@ -51,7 +51,7 @@ export default function FigHero() {
 
       <Container className="relative py-16 md:py-20">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="[font-family:Lato,_Helvetica,_Arial,_sans-serif] text-[2.6rem] font-black leading-[1.06] tracking-tight md:text-[3.6rem]" style={{ color: INK }}>
+          <h1 className="[font-family:Lato,_Helvetica,_Arial,_sans-serif] text-[1.75rem] font-black leading-[1.1] tracking-tight vp375:text-[2rem] md:text-[3.6rem] md:leading-[1.06]" style={{ color: INK }}>
             <span data-hero-line className="block">
               A{" "}
               <span className="relative inline-block">
