@@ -80,17 +80,6 @@ export default function FigIngredients() {
   const panel = PANELS[tab.key];
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Quick fade/slide on tab swap. Skipped under prefers-reduced-motion.
-  useGSAP(
-    () => {
-      const el = panelRef.current;
-      if (!el) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      gsap.fromTo(el, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.3, ease: "power2.out" });
-    },
-    { dependencies: [active] }
-  );
-
   return (
     <section id="features" className="scroll-mt-24 bg-[#eef7f4] py-20">
       <Container>

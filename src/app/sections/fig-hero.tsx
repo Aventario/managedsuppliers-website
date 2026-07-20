@@ -1,37 +1,18 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
+import { useState } from "react";
 import { Container, PrimaryButton, INK } from "../components/art";
 import { ARROW_FX, BTN_FX } from "../components/screenshot-frame";
-
-gsap.registerPlugin(useGSAP);
 
 /** Centered SaaS hero: headline, subline, CTAs, and the explainer video
  *  below in a framed card. Video is self-hosted (/assets/video/explainer.mp4,
  *  transcoded from the original HubSpot .mov); nothing plays until clicked.
- *  Keeps the orchestrated GSAP load timeline. */
+ *  Content renders visible by default (no JS-dependent reveal). */
 export default function FigHero() {
-  const ref = useRef<HTMLElement>(null);
   const [playing, setPlaying] = useState(false);
 
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      gsap
-        .timeline({ defaults: { ease: "power3.out" } })
-        .from("[data-hero-line]", { autoAlpha: 0, y: 32, duration: 0.55, stagger: 0.08 })
-        .from("[data-hero-sub]", { autoAlpha: 0, y: 24, duration: 0.45 }, "-=0.3")
-        .from("[data-hero-cta]", { autoAlpha: 0, y: 16, duration: 0.4 }, "-=0.25")
-        .from("[data-hero-video]", { autoAlpha: 0, y: 56, scale: 0.96, duration: 0.7 }, "-=0.25");
-    },
-    { scope: ref }
-  );
-
   return (
-    <section ref={ref} className="relative overflow-hidden bg-background">
+    <section className="relative overflow-hidden bg-background">
       {/* semi-transparent brand triangle (signet motif, as in the Figma) */}
       <svg
         className="pointer-events-none absolute -right-32 -top-24 h-[640px] w-[640px]"

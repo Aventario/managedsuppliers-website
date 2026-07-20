@@ -1,11 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+import { useEffect, useRef } from "react";
 
 type RevealProps = {
   children: React.ReactNode;
@@ -21,17 +16,19 @@ type RevealProps = {
   as?: "div" | "section" | "span" | "ul";
 };
 
-const FROM: Record<string, gsap.TweenVars> = {
-  "fade-up": { autoAlpha: 0, y: 40 },
-  fade: { autoAlpha: 0 },
-  scale: { autoAlpha: 0, scale: 0.94 },
-  "slide-left": { autoAlpha: 0, x: 48 },
-  "slide-right": { autoAlpha: 0, x: -48 },
+const HIDDEN: Record<string, string> = {
+  "fade-up": "translateY(40px)",
+  fade: "none",
+  scale: "scale(0.94)",
+  "slide-left": "translateX(48px)",
+  "slide-right": "translateX(-48px)",
 };
 
 /**
- * Scroll-triggered reveal wrapper. Animates once when ~80% of the viewport
- * reaches the element. Respects prefers-reduced-motion (content simply shows).
+ * Scroll-triggered reveal wrapper. Uses IntersectionObserver (not GSAP) so it
+ * can never leave content stuck hidden: content is visible by default, the
+ * hidden -> visible transition only runs client-side, a failsafe timer reveals
+ * regardless, and prefers-reduced-motion skips the motion entirely.
  */
 export default function Reveal({
   children,
@@ -43,34 +40,57 @@ export default function Reveal({
   className,
   as: Tag = "div",
 }: RevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !("IntersectionObserver" in window)
+    ) {
+      return; // content stays visible, no motion
+    }
 
-      const targets = stagger ? Array.from(el.children) : el;
-      gsap.set(targets, FROM[variant]);
-      gsap.to(targets, {
-        autoAlpha: 1,
-        y: 0,
-        x: 0,
-        scale: 1,
-        duration,
-        delay,
-        ease: "power3.out",
-        stagger: stagger ? staggerEach : 0,
-        scrollTrigger: {
-          trigger: el,
-          start: "top 82%",
-          once: true,
-        },
+    const targets = (stagger ? Array.from(el.children) : [el]) as HTMLElement[];
+
+    const show = () =>
+      targets.forEach((t) => {
+        t.style.opacity = "1";
+        t.style.transform = "none";
       });
-    },
-    { scope: ref }
-  );
+
+    // Apply the hidden start state + transition.
+    targets.forEach((t, i) => {
+      const d = delay + (stagger ? i * staggerEach : 0);
+      t.style.willChange = "opacity, transform";
+      t.style.transition = `opacity ${duration}s cubic-bezier(0.22,1,0.36,1) ${d}s, transform ${duration}s cubic-bezier(0.22,1,0.36,1) ${d}s`;
+      t.style.opacity = "0";
+      t.style.transform = HIDDEN[variant];
+    });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            show();
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+    );
+    io.observe(el);
+
+    // Failsafe: if the observer never fires for any reason, reveal anyway.
+    const failsafe = window.setTimeout(show, 1400);
+
+    return () => {
+      io.disconnect();
+      window.clearTimeout(failsafe);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Comp = Tag as any;
