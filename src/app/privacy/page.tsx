@@ -20,7 +20,7 @@ export default function PrivacyPage() {
           Aventario Solutions GmbH<br />
           Tuchlauben 7a, 1010 Vienna, Austria<br />
           Email: <a href="mailto:office@aventario.com">office@aventario.com</a><br />
-          Phone: +43 1 343 3354012
+          Phone: +43 134 3354012
         </p>
         <p>
           We have not appointed a data protection officer, as we are not required to do so under

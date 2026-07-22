@@ -26,8 +26,9 @@ export default function ContactPage() {
             <div className="rounded-2xl bg-[#eef7f4] p-8">
               <h3 className="text-lg font-bold" style={{ color: INK }}>Managed Suppliers</h3>
               <div className="mt-4 space-y-4 text-sm text-foreground">
-                <p><span className="font-semibold" style={{ color: INK }}>Address</span><br />Aventario Solutions GmbH<br />Friedstraße 11<br />Vienna, Austria</p>
-                <p><span className="font-semibold" style={{ color: INK }}>Email</span><br />office@aventario.com</p>
+                <p><span className="font-semibold" style={{ color: INK }}>Address</span><br />Aventario Solutions GmbH<br />Tuchlauben 7a<br />1010 Vienna, Austria</p>
+                <p><span className="font-semibold" style={{ color: INK }}>Phone</span><br /><a href="tel:+431343354012">+43 134 3354012</a></p>
+                <p><span className="font-semibold" style={{ color: INK }}>Email</span><br /><a href="mailto:office@aventario.com">office@aventario.com</a></p>
               </div>
             </div>
           </Reveal>

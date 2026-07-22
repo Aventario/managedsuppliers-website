@@ -24,7 +24,7 @@ export default function ImprintPage() {
         <H2>Contact</H2>
         <p>
           Email: <a href="mailto:office@aventario.com">office@aventario.com</a><br />
-          Phone: +43 1 343 3354012<br />
+          Phone: +43 134 3354012<br />
           Web: www.managedsuppliers.com
         </p>
 

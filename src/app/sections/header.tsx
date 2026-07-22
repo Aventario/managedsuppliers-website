@@ -121,9 +121,6 @@ export default function Header() {
               {n.label}
             </a>
           ))}
-          <a href="/contact" className="text-[0.95rem] font-semibold text-[#243b53] no-underline transition-colors hover:text-accent">
-            Log in
-          </a>
           <a
             href="/contact"
             className="inline-block rounded-lg bg-accent px-5 py-2.5 text-[0.95rem] font-semibold text-background no-underline transition-opacity hover:opacity-90"
@@ -171,9 +168,6 @@ export default function Header() {
               {n.label}
             </a>
           ))}
-          <a href="/contact" onClick={() => setOpen(false)} className="text-base font-semibold text-[#243b53] no-underline">
-            Log in
-          </a>
           <a
             href="/contact"
             onClick={() => setOpen(false)}
