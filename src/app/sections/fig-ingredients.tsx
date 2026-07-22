@@ -113,7 +113,7 @@ export default function FigIngredients() {
 
           {/* Panel: product view + problem/solution, swapped together */}
           <div ref={panelRef}>
-            <div className="mt-10">
+            <div className="mt-10 text-center">
               {panel.screenshot ? (
                 <ScreenshotFrame src={panel.src} alt={panel.alt} className="mx-auto max-w-[900px]" />
               ) : (

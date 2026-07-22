@@ -16,7 +16,7 @@ export default function FigCollaboration() {
             The solution to all your supplier management challenges
           </h2>
 
-          <Drift amount={14} className="mt-12">
+          <Drift amount={14} className="mt-12 text-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/assets/original/Group-1000004173.svg"
