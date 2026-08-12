@@ -11,11 +11,11 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 /** Credibility section: Aventario's standing proof points behind the
  *  product. Numbers count up on scroll (skipped under reduced motion). */
-const STATS: Array<{ prefix?: string; value: number; suffix: string; accent?: "suffix" | "prefix"; label: string; display?: string }> = [
+const STATS: Array<{ prefix?: string; value: number; suffix: string; label: string; display?: string }> = [
   { value: 25, suffix: "+", label: "Years of industry experience" },
   { value: 500, suffix: "+", label: "Projects delivered" },
-  { prefix: "€", value: 3, suffix: "B+", accent: "suffix", label: "Negotiated contract volume" },
-  { display: "10-40", value: 40, suffix: "%", accent: "suffix", label: "Sustainable cost savings" },
+  { prefix: "€", value: 3, suffix: "B+", label: "Negotiated contract volume" },
+  { display: "10-40", value: 40, suffix: "%", label: "Sustainable cost savings" },
 ];
 
 export default function FigProof() {
@@ -62,11 +62,11 @@ export default function FigProof() {
           {STATS.map((s) => (
             <div key={s.label} className="rounded-xl border border-clr-0 bg-background p-7 shadow-[0_10px_30px_-18px_rgba(36,59,83,0.25)]">
               <p className="[font-family:Lato,_Helvetica,_Arial,_sans-serif] text-[2.4rem] font-black leading-none tracking-tight" style={{ color: INK }}>
-                {s.prefix && <span className={s.accent === "prefix" ? "text-[#8dccc0]" : undefined}>{s.prefix}</span>}
+                {s.prefix && <span>{s.prefix}</span>}
                 <span data-count={s.value} data-display={s.display ? "range" : undefined}>
                   {s.display ?? s.value}
                 </span>
-                <span className={s.accent === "suffix" ? "text-[#8dccc0]" : undefined}>{s.suffix}</span>
+                <span>{s.suffix}</span>
               </p>
               <p className="mt-3 text-[0.95rem] font-semibold text-foreground">{s.label}</p>
             </div>

@@ -96,13 +96,8 @@ export default function FigHowPlatform() {
         <Reveal stagger className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {ITEMS.map((it) => (
             <div key={it.title} className="rounded-2xl border border-[#e6efeb] bg-[#f8fbfa] p-6">
-              <div className="flex items-start justify-between">
+              <div className="flex items-start">
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-accent text-background">{it.icon}</span>
-                {/* quiet KPI chip accent */}
-                <span className="flex gap-1 pt-1" aria-hidden="true">
-                  <span className="h-2 w-4 rounded-md" style={{ background: "#7fd0b6" }} />
-                  <span className="h-2 w-4 rounded-md" style={{ background: "#8dccc0" }} />
-                </span>
               </div>
               <h3 className="mt-4 text-base font-bold" style={{ color: INK }}>{it.title}</h3>
               <p className="mt-2 text-[0.9rem] leading-relaxed text-foreground">{it.body}</p>
