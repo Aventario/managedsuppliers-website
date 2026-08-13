@@ -1,9 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { INK } from "./art";
 
 type State = "idle" | "submitting" | "success" | "error";
+
+/** Campaign attribution, first touch, kept for the length of the session so the
+ *  campaign that brought someone to the site is credited rather than the page
+ *  they happened to be on when they submitted. Mirrors aventario.com. */
+function attribution(): Record<string, string | null> {
+  const STORE = "ms-attribution";
+  try {
+    const saved = sessionStorage.getItem(STORE);
+    if (saved) return JSON.parse(saved);
+  } catch { /* private mode */ }
+  const p = new URLSearchParams(location.search);
+  const a = {
+    utm_source: p.get("utm_source"),
+    utm_medium: p.get("utm_medium"),
+    utm_campaign: p.get("utm_campaign"),
+    utm_term: p.get("utm_term"),
+    utm_content: p.get("utm_content"),
+    gclid: p.get("gclid") || p.get("wbraid") || p.get("gbraid"),
+    referrer: document.referrer ? document.referrer.slice(0, 500) : null,
+    landing_page: location.pathname + (location.search || ""),
+  };
+  try { sessionStorage.setItem(STORE, JSON.stringify(a)); } catch { /* ignore */ }
+  return a;
+}
 
 /** Same lead pipeline as aventario.com: direct insert into the shared
  *  Supabase `leads` table with the publishable key (RLS: public insert only).
@@ -14,12 +38,24 @@ const SB_KEY = "sb_publishable_0R1ZCaygbhIA4xY3MhpN6w_qOFeRhoa";
 export default function ContactForm() {
   const [state, setState] = useState<State>("idle");
   const [error, setError] = useState("");
+  // Bots fill every field they find and submit instantly. Both are cheap to catch.
+  // Between 23.07.2026 and 09.08.2026 this form produced seven junk leads, each of
+  // which became a task on the Asana board.
+  const openedAt = useRef(Date.now());
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setState("submitting");
     setError("");
     const fd = new FormData(e.currentTarget);
+
+    // Honeypot: a real person never sees this field, so a value means a bot.
+    // Show the success state anyway, otherwise the bot learns and adapts.
+    if (String(fd.get("website") ?? "").trim() !== "" || Date.now() - openedAt.current < 3000) {
+      setState("success");
+      return;
+    }
+
     const name = [fd.get("firstName"), fd.get("lastName")]
       .map((v) => String(v ?? "").trim())
       .filter(Boolean)
@@ -33,6 +69,7 @@ export default function ContactForm() {
       consent: !!fd.get("consent"),
       source: "managedsuppliers.com",
       user_agent: navigator.userAgent,
+      ...attribution(),
     };
     try {
       const res = await fetch(`${SB_URL}/rest/v1/leads`, {
@@ -46,6 +83,12 @@ export default function ContactForm() {
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error("Something went wrong. Please try again or email us directly.");
+      // Conversion event for GA4 and Google Ads, through the GTM container.
+      (window as unknown as { dataLayer?: unknown[] }).dataLayer?.push({
+        event: "generate_lead",
+        form_location: location.pathname,
+        lead_type: "demo",
+      });
       setState("success");
     } catch (err) {
       setState("error");
@@ -69,6 +112,16 @@ export default function ContactForm() {
 
   return (
     <form className="grid gap-5 sm:grid-cols-2" onSubmit={onSubmit}>
+      {/* Honeypot. Off screen rather than display:none, which some bots skip. */}
+      <input
+        name="website"
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute h-px w-px overflow-hidden opacity-0"
+        style={{ left: "-9999px" }}
+      />
       <label className="flex flex-col gap-1.5">
         <span className="text-sm font-semibold" style={{ color: INK }}>First name</span>
         <input name="firstName" required className={inputCls} />
