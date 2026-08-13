@@ -4,6 +4,7 @@ import FigBlog from "../sections/fig-blog";
 import { FigNextLevelBanner } from "../sections/fig-banners";
 
 export const metadata = {
+  alternates: { canonical: "/blog" },
   title: "Blog | managedsuppliers",
   description:
     "Practical guidance on vendor collaboration, reporting, and getting more from every supplier relationship.",

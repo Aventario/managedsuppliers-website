@@ -14,6 +14,8 @@ import FigProof from "./sections/fig-proof";
 import FigFaq from "./sections/fig-faq";
 import FigFooter from "./sections/fig-footer";
 
+export const metadata = { alternates: { canonical: "/" } };
+
 export default function Page() {
   return (
     <>

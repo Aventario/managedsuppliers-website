@@ -16,7 +16,8 @@ const VALUES = [
   { title: "Outcome-driven", body: "Success is measured in errors avoided, hours saved, and better decisions, not features shipped." },
 ];
 
-export const metadata = { title: "About | managedsuppliers" };
+export const metadata = {
+  alternates: { canonical: "/about" }, title: "About | managedsuppliers" };
 
 export default function AboutPage() {
   return (

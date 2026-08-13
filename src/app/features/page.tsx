@@ -42,6 +42,7 @@ const BENEFITS: Benefit[] = [
 ];
 
 export const metadata = {
+  alternates: { canonical: "/features" },
   title: "Features and benefits | managedsuppliers",
   description:
     "The six core features of managedsuppliers, the platform-wide reporting, and the benefits they produce for supplier and contract management.",

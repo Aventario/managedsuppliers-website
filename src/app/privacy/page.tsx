@@ -1,7 +1,8 @@
 import { LegalPage, H2 } from "../components/legal";
 import Reveal from "../components/reveal";
 
-export const metadata = { title: "Privacy Policy | managedsuppliers" };
+export const metadata = {
+  alternates: { canonical: "/privacy" }, title: "Privacy Policy | managedsuppliers" };
 
 export default function PrivacyPage() {
   return (

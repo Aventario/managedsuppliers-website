@@ -1,7 +1,8 @@
 import { LegalPage, H2 } from "../components/legal";
 import Reveal from "../components/reveal";
 
-export const metadata = { title: "Imprint | managedsuppliers" };
+export const metadata = {
+  alternates: { canonical: "/imprint" }, title: "Imprint | managedsuppliers" };
 
 export default function ImprintPage() {
   return (

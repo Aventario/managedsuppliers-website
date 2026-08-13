@@ -4,6 +4,7 @@ import { FaqPageContent } from "../sections/fig-faq";
 import Reveal from "../components/reveal";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/faq" },
   title: "FAQ | managedsuppliers",
   description:
     "Answers to common questions about managedsuppliers: the six core features, reporting, security, versioning, supplier collaboration, DocuSign, forecasting, and getting started.",

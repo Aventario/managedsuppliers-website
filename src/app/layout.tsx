@@ -10,21 +10,15 @@ export const metadata = {
   "title": "A better way to manage suppliers - managedsuppliers",
   "description": "Manage the full supplier lifecycle in one cloud platform: drafting SOWs, negotiation, KPI measurement, forecasting, and reporting",
   "robots": "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  "alternates": {
-    "canonical": "/",
-    "languages": {
-      "en-US": "https://managedsuppliers.com/",
-      "de-DE": "https://managedsuppliers.com/de/",
-      "en": "https://managedsuppliers.com/",
-      "de": "https://managedsuppliers.com/de/"
-    }
-  },
+  // No global canonical. Next.js hands a layout-level canonical to every page that
+  // does not set its own, which is how all 12 routes ended up claiming to be the
+  // homepage. Each page declares its own below. There is no German site, so no
+  // language alternates either.
   "openGraph": {
     "title": "A better way to manage suppliers - managedsuppliers",
     "description": "Manage the full supplier lifecycle in one cloud platform: drafting SOWs, negotiation, KPI measurement, forecasting, and reporting",
     "type": "website",
     "siteName": "managedsuppliers",
-    "url": "/",
     "images": [
       "https://managedsuppliers.com/assets/video/explainer-poster.jpg"
     ]

@@ -13,10 +13,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return { title: "Blog | managedsuppliers" };
+  if (!post) return { title: "Blog | managedsuppliers", alternates: { canonical: "/blog" } };
   return {
     title: `${post.title} | managedsuppliers`,
     description: post.body[0],
+    alternates: { canonical: `/blog/${slug}` },
   };
 }
 

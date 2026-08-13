@@ -46,7 +46,8 @@ const TIERS = [
   },
 ];
 
-export const metadata = { title: "Pricing | managedsuppliers" };
+export const metadata = {
+  alternates: { canonical: "/pricing" }, title: "Pricing | managedsuppliers" };
 
 function Check() {
   return (

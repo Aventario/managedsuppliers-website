@@ -1,7 +1,8 @@
 import { LegalPage, H2 } from "../components/legal";
 import Reveal from "../components/reveal";
 
-export const metadata = { title: "Terms and Conditions | managedsuppliers" };
+export const metadata = {
+  alternates: { canonical: "/terms" }, title: "Terms and Conditions | managedsuppliers" };
 
 export default function TermsPage() {
   return (

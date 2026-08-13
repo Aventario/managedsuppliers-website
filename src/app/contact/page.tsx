@@ -3,7 +3,8 @@ import ContactForm from "../components/contact-form";
 import { Container, INK } from "../components/art";
 import Reveal from "../components/reveal";
 
-export const metadata = { title: "Contact | managedsuppliers" };
+export const metadata = {
+  alternates: { canonical: "/contact" }, title: "Contact | managedsuppliers" };
 
 const NEXT_STEPS = [
   { step: "1", title: "You get a reply", body: "A person from our team reads your message and answers it. No automated funnel." },
